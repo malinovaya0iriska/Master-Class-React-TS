@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/order
+import { CounterManagement } from 'components/CounterManagement';
+
 import { FC } from 'react';
 
 import './App.css';
@@ -13,6 +16,7 @@ export const App: FC = (): ReturnComponentType => (
       <Button>Default</Button>
       <h1>Learn React</h1>
       <Button type="primary">Primary</Button>
+      <CounterManagement ownerName="Tina" />
     </header>
   </div>
 );
