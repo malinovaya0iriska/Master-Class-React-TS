@@ -38,17 +38,3 @@ export class App extends Component<{}, AppState> {
     );
   }
 }
-
-// export const App: FC = (): ReturnComponentType => (
-//   <div className="App">
-//     <header className="App-header">
-//       <p>
-//         Edit <code>src/App.tsx</code> and save to reload.
-//       </p>
-//       <Button>Default</Button>
-//       <h1>Learn React</h1>
-//       <Button type="primary">Primary</Button>
-//       <CounterManagement ownerName="Tina" />
-//     </header>
-//   </div>
-// );

@@ -2,8 +2,8 @@ export type CounterManagementProps = {
   ownerName: string;
 };
 export type CounterManagementState = {
-  user: number;
-  userData: UserType;
+  currentUserID: number;
+  users: UserType[];
 };
 
 export type UserTypeAPI = {

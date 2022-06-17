@@ -1,13 +1,14 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import {
   CounterManagementProps,
   CounterManagementState,
-  UserType,
+  UserTypeAPI,
 } from 'components/CounterManagement/types';
-import { ONE } from 'constants/index';
+import { MAX_USER_ID, ONE } from 'constants/index';
+import { hasUserAlreadyFetched } from 'helpers';
 import { ReturnComponentType } from 'types';
 
 export class CounterManagement extends Component<
@@ -18,19 +19,12 @@ export class CounterManagement extends Component<
     super(props);
 
     this.state = {
-      user: 1,
-      userData: {
-        avatar: '',
-        email: '',
-        first_name: '',
-        id: 0,
-        last_name: '',
-      },
+      currentUserID: 1,
+      users: [],
     };
   }
 
   componentDidMount(): void {
-    console.log('componentDidMount');
     this.fetchUserData();
   }
 
@@ -48,8 +42,11 @@ export class CounterManagement extends Component<
     preState: CounterManagementState,
     snapshot: any,
   ): void {
-    const { user } = this.state;
-    if (preState.user !== user) {
+    const { users, currentUserID } = this.state;
+    if (
+      preState.currentUserID !== currentUserID &&
+      !hasUserAlreadyFetched(users, currentUserID)
+    ) {
       // to prevent unlimited loop
       this.fetchUserData();
     }
@@ -57,15 +54,21 @@ export class CounterManagement extends Component<
   }
 
   handleAddClick = (): void => {
-    this.setState((prevValue: CounterManagementState) => ({
-      user: prevValue.user + ONE,
-    }));
+    const { currentUserID } = this.state;
+    if (currentUserID < MAX_USER_ID) {
+      this.setState((prevValue: CounterManagementState) => ({
+        currentUserID: prevValue.currentUserID + ONE,
+      }));
+    }
   };
 
   handleMinusClick = (): void => {
-    this.setState((prevValue: CounterManagementState) => ({
-      user: prevValue.user - ONE,
-    }));
+    const { currentUserID } = this.state;
+    if (currentUserID > ONE) {
+      this.setState((prevValue: CounterManagementState) => ({
+        currentUserID: prevValue.currentUserID - ONE,
+      }));
+    }
   };
 
   static getDerivedStateFromProps(
@@ -86,26 +89,36 @@ export class CounterManagement extends Component<
     return { scrollPosition: '152px' };
   }
 
-  fetchUserData = (): void => {
-    const { user } = this.state;
-    axios.get(`https://reqres.in/api/users/${user}`).then(response => {
-      const userData = response.data.data as UserType;
+  fetchUserData = async (): Promise<void> => {
+    const { currentUserID, users } = this.state;
+    const response: AxiosResponse<UserTypeAPI, number> = await axios.get(
+      `https://reqres.in/api/users/${currentUserID}`,
+    );
+    const { data } = response.data;
+    console.log(data, 'DATA');
 
-      this.setState({ userData });
-    });
+    this.setState({ users: [...users, data] });
+  };
+
+  renderUsers = (): ReactElement[] => {
+    const { users, currentUserID } = this.state;
+    return users
+      .filter(user => user.id <= currentUserID)
+      .map(({ avatar, first_name: name, last_name: surname }) => (
+        <div key={name}>
+          <img src={avatar} alt="" />
+          <span>{`${name}${surname}`}</span>
+        </div>
+      ));
   };
 
   render(): ReturnComponentType {
-    const { ownerName } = this.props;
-    const { userData, user } = this.state;
-    const { first_name: name } = userData;
+    const { currentUserID } = this.state;
     return (
       <>
-        <h1>Update Component</h1>
-        <div>{ownerName}</div>
-        <p>UserID: {user}</p>
-        <h3>{name}</h3>
-
+        <h1>Users Management</h1>
+        <div>{this.renderUsers()}</div>
+        <div>Number of Users: {currentUserID}</div>
         <button type="submit" onClick={this.handleAddClick}>
           Increase
         </button>
