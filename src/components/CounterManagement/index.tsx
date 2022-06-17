@@ -5,6 +5,7 @@ import axios from 'axios';
 import {
   CounterManagementProps,
   CounterManagementState,
+  UserType,
 } from 'components/CounterManagement/types';
 import { ONE } from 'constants/index';
 import { ReturnComponentType } from 'types';
@@ -17,21 +18,20 @@ export class CounterManagement extends Component<
     super(props);
 
     this.state = {
-      counter: 0,
-      users: [],
+      user: 1,
+      userData: {
+        avatar: '',
+        email: '',
+        first_name: '',
+        id: 0,
+        last_name: '',
+      },
     };
   }
 
   componentDidMount(): void {
     console.log('componentDidMount');
-
-    axios.get('https://reqres.in/api/users?page=2').then(response => {
-      const { data } = response;
-      const users = data.data.map((userData: any) => userData.first_name);
-      this.setState({ users });
-    });
-
-    window.addEventListener('click', this.clickWindow);
+    this.fetchUserData();
   }
 
   shouldComponentUpdate(
@@ -48,22 +48,23 @@ export class CounterManagement extends Component<
     preState: CounterManagementState,
     snapshot: any,
   ): void {
-    console.log('componentDidUpdate', prevProps, preState, 'snapshot - ', snapshot);
-  }
-
-  componentWillUnmount(): void {
-    window.removeEventListener('click', this.clickWindow);
+    const { user } = this.state;
+    if (preState.user !== user) {
+      // to prevent unlimited loop
+      this.fetchUserData();
+    }
+    console.log('snapshot', snapshot);
   }
 
   handleAddClick = (): void => {
     this.setState((prevValue: CounterManagementState) => ({
-      counter: prevValue.counter + ONE,
+      user: prevValue.user + ONE,
     }));
   };
 
   handleMinusClick = (): void => {
     this.setState((prevValue: CounterManagementState) => ({
-      counter: prevValue.counter - ONE,
+      user: prevValue.user - ONE,
     }));
   };
 
@@ -73,7 +74,6 @@ export class CounterManagement extends Component<
   ): null {
     console.log('getDerivedStateFromProps', props, state);
 
-    // return props.ownerName === 'Tina' ? { counter: 6 } : null; // it doesn't let update counter by buttons
     return null;
   }
 
@@ -86,35 +86,32 @@ export class CounterManagement extends Component<
     return { scrollPosition: '152px' };
   }
 
-  clickWindow = (): void => {
-    console.log('clickWindow occured');
+  fetchUserData = (): void => {
+    const { user } = this.state;
+    axios.get(`https://reqres.in/api/users/${user}`).then(response => {
+      const userData = response.data.data as UserType;
 
-    this.setState((prevValue: CounterManagementState) => ({
-      counter: prevValue.counter + ONE,
-    }));
+      this.setState({ userData });
+    });
   };
 
   render(): ReturnComponentType {
     const { ownerName } = this.props;
-    const { counter, users } = this.state;
+    const { userData, user } = this.state;
+    const { first_name: name } = userData;
     return (
       <>
-        <h1>fghdsfjhd</h1>
+        <h1>Update Component</h1>
         <div>{ownerName}</div>
-        <p>Counter: {counter}</p>
+        <p>UserID: {user}</p>
+        <h3>{name}</h3>
+
         <button type="submit" onClick={this.handleAddClick}>
           Increase
         </button>
         <button type="submit" onClick={this.handleMinusClick}>
           Decrease
         </button>
-        <p>It won&apos;t work until eventListener on window increases counter</p>
-
-        <ul>
-          {users.map((user: string) => (
-            <li key={user}>{user}</li>
-          ))}
-        </ul>
       </>
     );
   }
