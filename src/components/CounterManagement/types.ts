@@ -3,4 +3,5 @@ export type CounterManagementProps = {
 };
 export type CounterManagementState = {
   counter: number;
+  users: string[];
 };
