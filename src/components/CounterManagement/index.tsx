@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 
 import {
   CounterManagementProps,
@@ -31,7 +31,7 @@ export class CounterManagement extends Component<
     }));
   };
 
-  render(): any {
+  render(): ReactElement {
     const { ownerName } = this.props;
     const { counter } = this.state;
     return (
