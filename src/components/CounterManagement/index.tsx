@@ -34,6 +34,23 @@ export class CounterManagement extends Component<
     window.addEventListener('click', this.clickWindow);
   }
 
+  shouldComponentUpdate(
+    nextProps: CounterManagementProps,
+    nextState: CounterManagementState,
+  ): boolean {
+    console.log('shouldComponentUpdate', nextProps, nextState);
+
+    return true;
+  }
+
+  componentDidUpdate(
+    prevProps: CounterManagementProps,
+    preState: CounterManagementState,
+    snapshot: any,
+  ): void {
+    console.log('componentDidUpdate', prevProps, preState, 'snapshot - ', snapshot);
+  }
+
   componentWillUnmount(): void {
     window.removeEventListener('click', this.clickWindow);
   }
@@ -58,6 +75,15 @@ export class CounterManagement extends Component<
 
     // return props.ownerName === 'Tina' ? { counter: 6 } : null; // it doesn't let update counter by buttons
     return null;
+  }
+
+  getSnapshotBeforeUpdate(
+    prevProps: CounterManagementProps,
+    preState: CounterManagementState,
+  ): { scrollPosition: string } {
+    console.log('getSnapshotBeforeUpdate', prevProps, preState);
+
+    return { scrollPosition: '152px' };
   }
 
   clickWindow = (): void => {
