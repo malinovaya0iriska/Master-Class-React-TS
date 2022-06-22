@@ -107,7 +107,7 @@ export class CounterManagement extends Component<
       .map(({ avatar, first_name: name, last_name: surname }) => (
         <div key={name}>
           <img src={avatar} alt="" />
-          <span>{`${name}${surname}`}</span>
+          <span>{`${name} ${surname}`}</span>
         </div>
       ));
   };

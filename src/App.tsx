@@ -1,19 +1,32 @@
-import { Component } from 'react';
+import { Component, ErrorInfo } from 'react';
 
-import { Button } from 'components/Button';
-import { CounterManagement } from 'components/CounterManagement';
+import { Button, CounterManagement, ErrorHandling } from 'components';
+import { ErrorHandlingState } from 'components/ErrorHandling/types';
 import { ReturnComponentType } from 'types';
 import './App.css';
 
 type AppState = {
-  change: boolean;
+  change?: boolean;
+  hasError: boolean;
 };
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
       change: false,
+      hasError: false,
     };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorHandlingState {
+    console.log('APP getDerivedStateFromError', error);
+
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo): void {
+    console.log('APP componentDidCatch', error);
+    console.log('APP componentDidCatch', info);
   }
 
   clickButton = (): void => {
@@ -22,7 +35,9 @@ export class App extends Component<{}, AppState> {
   };
 
   render(): ReturnComponentType {
-    const { change } = this.state;
+    const { change, hasError } = this.state;
+    console.log(hasError);
+
     return (
       <div className="App">
         <h1>My APP</h1>
@@ -34,6 +49,8 @@ export class App extends Component<{}, AppState> {
         <button type="submit" onClick={this.clickButton}>
           Change
         </button>
+
+        {!hasError && <ErrorHandling />}
       </div>
     );
   }

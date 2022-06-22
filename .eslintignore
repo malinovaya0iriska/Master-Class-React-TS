@@ -1,3 +1,4 @@
 *.css
 *.json
 *.d.ts
+/src/components/InnerComponentWithError/index.tsx
