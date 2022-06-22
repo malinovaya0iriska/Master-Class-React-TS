@@ -1,20 +1,32 @@
-import { Component, ErrorInfo } from 'react';
+import { ErrorInfo, PureComponent } from 'react';
 
 import { Button, CounterManagement, ErrorHandling } from 'components';
 import { ErrorHandlingState } from 'components/ErrorHandling/types';
+import MyReactMemo from 'components/MyReactMemo';
 import { ReturnComponentType } from 'types';
 import './App.css';
 
 type AppState = {
   change?: boolean;
   hasError: boolean;
+  name: string;
+  address: {
+    city: string;
+    street: string;
+  };
 };
-export class App extends Component<{}, AppState> {
+export class App extends PureComponent<{}, AppState> {
   constructor(props: {}) {
     super(props);
+
     this.state = {
       change: false,
       hasError: false,
+      name: 'Mia',
+      address: {
+        city: 'Minsk',
+        street: 'Chruckogo',
+      },
     };
   }
 
@@ -34,9 +46,22 @@ export class App extends Component<{}, AppState> {
     this.setState({ change: !change });
   };
 
+  handleSetAddress = (): void => {
+    const newAddress = {
+      city: 'Brest',
+      street: 'Novaya',
+    };
+    this.setState({ address: newAddress });
+  };
+
+  handleSetName = (): void => {
+    this.setState({ name: 'Kristina' });
+  };
+
   render(): ReturnComponentType {
-    const { change, hasError } = this.state;
+    const { change, hasError, name, address } = this.state;
     console.log(hasError);
+    console.log('PureComponent render');
 
     return (
       <div className="App">
@@ -51,6 +76,17 @@ export class App extends Component<{}, AppState> {
         </button>
 
         {!hasError && <ErrorHandling />}
+
+        <MyReactMemo name={name} address={address} />
+        <button type="submit" onClick={this.handleSetAddress}>
+          Change Address
+        </button>
+
+        <p>{name}</p>
+        <p>{address.city}</p>
+        <button type="submit" onClick={this.handleSetName}>
+          Change Name
+        </button>
       </div>
     );
   }
