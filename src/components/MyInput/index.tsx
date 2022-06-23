@@ -1,12 +1,21 @@
 /* eslint-disable react/prefer-stateless-function */
 import { Component } from 'react';
 
-import { MyInputProps } from 'components/MyInput/types';
+import { MyInputProps, MyInputState } from 'components/MyInput/types';
 import { MyContext } from 'context';
 import { ReturnComponentType } from 'types';
 
-export class MyInput extends Component<MyInputProps> {
+export class MyInput extends Component<MyInputProps, MyInputState> {
+  constructor(props: MyInputProps) {
+    super(props);
+
+    this.state = {
+      newUser: '',
+    };
+  }
+
   render(): ReturnComponentType {
+    const { newUser } = this.state;
     return (
       <MyContext.Consumer>
         {value => (
@@ -17,10 +26,19 @@ export class MyInput extends Component<MyInputProps> {
                 <li key={user}>{user}</li>
               ))}
             </ul>
-            <button onClick={() => value.updateUser('Pavel')} type="submit">
+            <button
+              onClick={() => {
+                this.setState({ newUser: '' });
+                value.updateUser(newUser);
+              }}
+              type="submit"
+            >
               Add User
             </button>
-            <input />
+            <input
+              value={newUser}
+              onChange={event => this.setState({ newUser: event.target.value })}
+            />
           </div>
         )}
       </MyContext.Consumer>
