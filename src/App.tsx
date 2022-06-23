@@ -2,7 +2,9 @@ import { ErrorInfo, PureComponent } from 'react';
 
 import { Button, CounterManagement, ErrorHandling } from 'components';
 import { ErrorHandlingState } from 'components/ErrorHandling/types';
+import { MyForContext } from 'components/MyForContext';
 import MyReactMemo from 'components/MyReactMemo';
+import { MyContextProvider } from 'context';
 import { ReturnComponentType } from 'types';
 import './App.css';
 
@@ -64,30 +66,34 @@ export class App extends PureComponent<{}, AppState> {
     console.log('PureComponent render');
 
     return (
-      <div className="App">
-        <h1>My APP</h1>
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
+      <MyContextProvider>
+        <div className="App">
+          <h1>My APP</h1>
 
-        {change && <CounterManagement ownerName="Tina" />}
-        <Button type="primary">Primary</Button>
-        <Button>Default</Button>
+          {change && <CounterManagement ownerName="Tina" />}
+          <Button type="primary">Primary</Button>
+          <Button>Default</Button>
 
-        <button type="submit" onClick={this.clickButton}>
-          Change
-        </button>
+          <button type="submit" onClick={this.clickButton}>
+            Change
+          </button>
 
-        {!hasError && <ErrorHandling />}
+          {!hasError && <ErrorHandling />}
 
-        <MyReactMemo name={name} address={address} />
-        <button type="submit" onClick={this.handleSetAddress}>
-          Change Address
-        </button>
+          <MyReactMemo name={name} address={address} />
+          <button type="submit" onClick={this.handleSetAddress}>
+            Change Address
+          </button>
 
-        <p>{name}</p>
-        <p>{address.city}</p>
-        <button type="submit" onClick={this.handleSetName}>
-          Change Name
-        </button>
-      </div>
+          <p>{name}</p>
+          <p>{address.city}</p>
+          <button type="submit" onClick={this.handleSetName}>
+            Change Name
+          </button>
+          <MyForContext />
+        </div>
+      </MyContextProvider>
     );
   }
 }
