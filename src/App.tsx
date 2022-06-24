@@ -8,6 +8,7 @@ import {
   MyInput,
   MyReactMemo,
   TrackClick,
+  WrappedWithHOC,
 } from 'components';
 import { ErrorHandlingState } from 'components/ErrorHandling/types';
 import { MyContextProvider } from 'context';
@@ -99,6 +100,8 @@ export class App extends PureComponent<{}, AppState> {
           </button>
           <MyForContext />
           <TrackClick renderProps={click => <MyInput click={click} />} />
+
+          <WrappedWithHOC />
         </div>
       </MyContextProvider>
     );

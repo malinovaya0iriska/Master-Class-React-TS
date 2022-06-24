@@ -7,3 +7,4 @@ export { MyForContext } from './MyForContext';
 export { MyInput } from './MyInput';
 export { default as MyReactMemo } from './MyReactMemo';
 export { TrackClick } from './TrackClick';
+export { default as WrappedWithHOC } from './WrappedWithHOC';
