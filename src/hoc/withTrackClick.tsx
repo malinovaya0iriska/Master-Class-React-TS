@@ -30,7 +30,7 @@ export const withTrackClick = <T extends unknown>(
       const { click } = this.state;
       return (
         <div onClick={this.handleOnTrackClick} role="presentation">
-          <WrapperComponent {...this.props} click={click} />{' '}
+          <WrapperComponent {...this.props} click={click} />
         </div>
       );
     }

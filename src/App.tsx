@@ -4,6 +4,7 @@ import {
   Button,
   CounterManagement,
   ErrorHandling,
+  Modal,
   MyForContext,
   MyInput,
   MyReactMemo,
@@ -23,12 +24,14 @@ type AppState = {
     city: string;
     street: string;
   };
+  show: boolean;
 };
 export class App extends PureComponent<{}, AppState> {
   constructor(props: {}) {
     super(props);
 
     this.state = {
+      show: true,
       change: false,
       hasError: false,
       name: 'Mia',
@@ -68,7 +71,7 @@ export class App extends PureComponent<{}, AppState> {
   };
 
   render(): ReturnComponentType {
-    const { change, hasError, name, address } = this.state;
+    const { change, hasError, name, address, show } = this.state;
     console.log(hasError);
     console.log('PureComponent render');
 
@@ -102,6 +105,14 @@ export class App extends PureComponent<{}, AppState> {
           <TrackClick renderProps={click => <MyInput click={click} />} />
 
           <WrappedWithHOC />
+
+          <p>Modal</p>
+          <Modal
+            show={show}
+            onClose={() => {
+              this.setState({ show: false });
+            }}
+          />
         </div>
       </MyContextProvider>
     );
