@@ -1,9 +1,15 @@
 import { ErrorInfo, PureComponent } from 'react';
 
-import { Button, CounterManagement, ErrorHandling } from 'components';
+import {
+  Button,
+  CounterManagement,
+  ErrorHandling,
+  MyForContext,
+  MyInput,
+  MyReactMemo,
+  TrackClick,
+} from 'components';
 import { ErrorHandlingState } from 'components/ErrorHandling/types';
-import { MyForContext } from 'components/MyForContext';
-import MyReactMemo from 'components/MyReactMemo';
 import { MyContextProvider } from 'context';
 import { ReturnComponentType } from 'types';
 import './App.css';
@@ -92,6 +98,7 @@ export class App extends PureComponent<{}, AppState> {
             Change Name
           </button>
           <MyForContext />
+          <TrackClick renderProps={click => <MyInput click={click} />} />
         </div>
       </MyContextProvider>
     );

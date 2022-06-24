@@ -15,11 +15,13 @@ export class MyInput extends Component<MyInputProps, MyInputState> {
   }
 
   render(): ReturnComponentType {
+    const { click } = this.props;
     const { newUser } = this.state;
     return (
       <MyContext.Consumer>
         {value => (
           <div>
+            <p>{click}</p>
             <h4>User Input</h4>
             <ul>
               {value.users.map((user: string) => (
