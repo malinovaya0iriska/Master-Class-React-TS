@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
 
 import {
   ItemsDispatchProps,
@@ -9,6 +9,7 @@ import {
   UnionItemsListProps,
 } from 'components/ItemsList/type';
 import ItemsActions from 'store/action/itemsAction';
+import { CustomDispatch } from 'store/middlewares';
 import { AppStoreType } from 'store/store';
 import { ReturnComponentType } from 'types';
 
@@ -54,10 +55,10 @@ const mapStateToProps: MapStateToProps<
   };
 };
 
-const mapDispatchToProps: MapDispatchToPropsFunction<
-  ItemsDispatchProps,
-  ItemsListProps
-> = (dispatch, ownProps) => {
+const mapDispatchToProps = (
+  dispatch: CustomDispatch<AppStoreType, ItemsActions>,
+  ownProps: ItemsListProps,
+): ItemsDispatchProps => {
   console.log('mapStateToProps', ownProps);
   const itemsActions = new ItemsActions();
 

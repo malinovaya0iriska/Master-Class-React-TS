@@ -1,13 +1,6 @@
 import { Reducer } from 'redux';
 
-export const ADD_USER = 'add-user-to-the-list';
-
-type UsersAction = {
-  type: string;
-  payload: UsersStateType;
-};
-
-type UsersStateType = string[];
+import { UserActions, UsersAction, UsersStateType } from 'store/action';
 
 export const usersReducer: Reducer<UsersStateType, UsersAction> = (
   state = [],
@@ -15,7 +8,7 @@ export const usersReducer: Reducer<UsersStateType, UsersAction> = (
 ): UsersStateType => {
   const { type, payload } = action;
   switch (type) {
-    case ADD_USER:
+    case UserActions.ADD_USER:
       return [...state, ...payload];
     default:
       return state;

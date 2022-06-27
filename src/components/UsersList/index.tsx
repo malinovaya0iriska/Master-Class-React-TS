@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
 
 import {
   UnionUsersListProps,
@@ -8,7 +8,8 @@ import {
   UsersListProps,
   UsersListStateProps,
 } from 'components/UsersList/type';
-import { ADD_USER } from 'store/reducers/usersReducer';
+import { UserActions, UsersAction } from 'store/action';
+import { CustomDispatch } from 'store/middlewares';
 import { AppStoreType } from 'store/store';
 import { ReturnComponentType } from 'types';
 
@@ -53,13 +54,14 @@ const mapStateToProps: MapStateToProps<
   };
 };
 
-const mapDispatchToProps: MapDispatchToPropsFunction<
-  UsersDispatchProps,
-  UsersListProps
-> = (dispatch, ownProps) => {
+const mapDispatchToProps = (
+  dispatch: CustomDispatch<AppStoreType, UsersAction>,
+  ownProps: UsersListProps,
+): UsersDispatchProps => {
   console.log('mapStateToProps', ownProps);
+  const usersActions = new UserActions();
   return {
-    addUser: (payload: string[]) => dispatch({ type: ADD_USER, payload }),
+    addUser: (payload: string[]) => dispatch(usersActions.addUsers(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
