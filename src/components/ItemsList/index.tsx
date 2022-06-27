@@ -1,13 +1,15 @@
 import { Component } from 'react';
 
-import { connect, MapStateToProps } from 'react-redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 
 import {
+  ItemsDispatchProps,
   ItemsListProps,
   ItemsListStateProps,
   UnionItemsListProps,
 } from 'components/ItemsList/type';
-import { ADD_ITEM } from 'reduxData/itemReducer';
+import ItemsActions from 'store/action/itemsAction';
+import { AppStoreType } from 'store/store';
 import { ReturnComponentType } from 'types';
 
 class ItemsList extends Component<UnionItemsListProps> {
@@ -17,8 +19,8 @@ class ItemsList extends Component<UnionItemsListProps> {
   }
 
   clickAddItem = (): void => {
-    const { dispatch } = this.props;
-    dispatch({ type: ADD_ITEM, payload: ['parfum', 'notepade'] });
+    const { addItem } = this.props;
+    addItem(['parfum', 'notepade']);
   };
 
   render(): ReturnComponentType {
@@ -40,15 +42,28 @@ class ItemsList extends Component<UnionItemsListProps> {
   }
 }
 
-const mapStateToProps: MapStateToProps<ItemsListStateProps, ItemsListProps, string[]> = (
-  state,
-  ownProps,
-) => {
+const mapStateToProps: MapStateToProps<
+  ItemsListStateProps,
+  ItemsListProps,
+  AppStoreType
+> = (state, ownProps) => {
   console.log('mapStateToProps', ownProps);
 
   return {
-    items: state,
+    items: state.items,
   };
 };
 
-export default connect(mapStateToProps)(ItemsList);
+const mapDispatchToProps: MapDispatchToPropsFunction<
+  ItemsDispatchProps,
+  ItemsListProps
+> = (dispatch, ownProps) => {
+  console.log('mapStateToProps', ownProps);
+  const itemsActions = new ItemsActions();
+
+  return {
+    addItem: (payload: string[]) => dispatch(itemsActions.addItems(payload)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsList);

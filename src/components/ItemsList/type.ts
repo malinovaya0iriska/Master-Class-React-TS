@@ -1,5 +1,3 @@
-import { Dispatch } from 'redux';
-
 export type ItemsListProps = {
   ownerName: string;
 };
@@ -9,7 +7,8 @@ export type ItemsListStateProps = {
 };
 
 export type UnionItemsListProps = ItemsListProps &
-  ItemsListStateProps & { dispatch: Dispatch };
+  ItemsListStateProps &
+  ItemsDispatchProps;
 
 export type ItemsDispatchProps = {
   addItem: (items: string[]) => void;

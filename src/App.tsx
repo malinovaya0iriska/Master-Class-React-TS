@@ -5,9 +5,9 @@ import './App.css';
 
 import { ReturnComponentType } from './types';
 
-import { ItemsList } from 'components';
+import { ItemsList, UsersList } from 'components';
 import { HomePage } from 'components/HomePage';
-import { store } from 'reduxData';
+import { store } from 'store';
 
 export const App: FC = (): ReturnComponentType => (
   <Provider store={store}>
@@ -15,6 +15,7 @@ export const App: FC = (): ReturnComponentType => (
       <header className="App-header">
         <HomePage />
         <ItemsList ownerName="Mila Kunis" />
+        <UsersList />
       </header>
     </div>
   </Provider>
