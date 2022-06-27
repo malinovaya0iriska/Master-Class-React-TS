@@ -1,3 +1,4 @@
+import { composeWithDevTools } from '@redux-devtools/extension';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 
 import { customMiddleware } from 'store/middlewares';
@@ -14,7 +15,7 @@ export const store = createStore(
     users: ['Tina', 'Mike'],
     items: ['goods', 'clothes', 'toys'],
   },
-  applyMiddleware(customMiddleware),
+  composeWithDevTools(applyMiddleware(customMiddleware)),
 );
 
 export type AppStoreType = ReturnType<typeof rootReducer>;
