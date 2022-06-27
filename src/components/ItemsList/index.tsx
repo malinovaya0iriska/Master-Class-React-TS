@@ -8,6 +8,7 @@ import {
   ItemsListStateProps,
   UnionItemsListProps,
 } from 'components/ItemsList/type';
+import { itemsWithT } from 'store';
 import ItemsActions from 'store/action/itemsAction';
 import { CustomDispatch } from 'store/middlewares';
 import { AppStoreType } from 'store/store';
@@ -51,7 +52,7 @@ const mapStateToProps: MapStateToProps<
   console.log('mapStateToProps', ownProps);
 
   return {
-    items: state.items,
+    items: itemsWithT(state),
   };
 };
 

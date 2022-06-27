@@ -1,6 +1,8 @@
 import { Reducer } from 'redux';
+import { createSelector } from 'reselect';
 
 import { ItemsAction, ItemsActions, ItemsStateType } from 'store/action';
+import { AppStoreType } from 'store/store';
 
 export const itemsReducer: Reducer<ItemsStateType, ItemsAction> = (
   state = [],
@@ -14,3 +16,8 @@ export const itemsReducer: Reducer<ItemsStateType, ItemsAction> = (
       return state;
   }
 };
+
+export const itemsWithT = createSelector(
+  (state: AppStoreType) => state.items,
+  (items: ItemsStateType) => items.filter((item: string) => item.includes('t')),
+);
