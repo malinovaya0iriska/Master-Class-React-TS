@@ -1,9 +1,8 @@
 import { Component } from 'react';
 
-import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
 
 import {
-  ItemsDispatchProps,
   ItemsListProps,
   ItemsListStateProps,
   UnionItemsListProps,
@@ -18,8 +17,8 @@ class ItemsList extends Component<UnionItemsListProps> {
   }
 
   clickAddItem = (): void => {
-    const { addItem } = this.props;
-    addItem(['parfum', 'notepade']);
+    const { dispatch } = this.props;
+    dispatch({ type: ADD_ITEM, payload: ['parfum', 'notepade'] });
   };
 
   render(): ReturnComponentType {
@@ -52,14 +51,4 @@ const mapStateToProps: MapStateToProps<ItemsListStateProps, ItemsListProps, stri
   };
 };
 
-const mapDispatchToProps: MapDispatchToPropsFunction<
-  ItemsDispatchProps,
-  ItemsListProps
-> = (dispatch, ownProps) => {
-  console.log('mapDispatchToProps', ownProps);
-
-  return {
-    addItem: payload => dispatch({ type: ADD_ITEM, payload }),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(ItemsList);
+export default connect(mapStateToProps)(ItemsList);
