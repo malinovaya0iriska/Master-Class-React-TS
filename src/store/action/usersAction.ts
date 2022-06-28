@@ -1,6 +1,6 @@
 import { Store } from 'redux';
 
-import { AppStoreType } from 'store/store';
+import { AppStoreType } from '../store';
 
 export type UsersAction = {
   type: string;

@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 
-import { UserActions, UsersAction, UsersStateType } from 'store/action';
+import { UserActions, UsersAction, UsersStateType } from '../action';
 
 export const usersReducer: Reducer<UsersStateType, UsersAction> = (
   state = [],

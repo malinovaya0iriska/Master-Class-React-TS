@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { HomePageProps } from './types';
+import { Button } from '../Button';
+import { ButtonGroup } from '../ButtonGroup';
 
-import { Button } from 'components/Button';
-import { ButtonGroup } from 'components/ButtonGroup';
+import { HomePageProps } from './types';
 
 export const HomePage: FC<HomePageProps> = () => (
   <>

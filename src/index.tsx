@@ -1,12 +1,14 @@
 import React from 'react';
 
-import ReactDOM from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 
 import { App } from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const container = document.getElementById('root') as HTMLElement;
+const root = hydrateRoot(container, <App />);
+
 root.render(
   <React.StrictMode>
     <App />

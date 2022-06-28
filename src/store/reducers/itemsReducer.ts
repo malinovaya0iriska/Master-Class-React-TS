@@ -1,8 +1,8 @@
 import { Reducer } from 'redux';
 import { createSelector } from 'reselect';
 
-import { ItemsAction, ItemsActions, ItemsStateType } from 'store/action';
-import { AppStoreType } from 'store/store';
+import { ItemsAction, ItemsActions, ItemsStateType } from '../action';
+import { AppStoreType } from '../store';
 
 export const itemsReducer: Reducer<ItemsStateType, ItemsAction> = (
   state = [],

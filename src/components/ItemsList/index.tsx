@@ -2,16 +2,18 @@ import { Component } from 'react';
 
 import { connect, MapStateToProps } from 'react-redux';
 
+import { itemsWithT } from '../../store';
+import ItemsActions from '../../store/action/itemsAction';
+import { CustomDispatch } from '../../store/middlewares';
+import { AppStoreType } from '../../store/store';
+
 import {
   ItemsDispatchProps,
   ItemsListProps,
   ItemsListStateProps,
   UnionItemsListProps,
-} from 'components/ItemsList/type';
-import { itemsWithT } from 'store';
-import ItemsActions from 'store/action/itemsAction';
-import { CustomDispatch } from 'store/middlewares';
-import { AppStoreType } from 'store/store';
+} from './type';
+
 import { ReturnComponentType } from 'types';
 
 class ItemsList extends Component<UnionItemsListProps> {

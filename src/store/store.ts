@@ -1,21 +1,30 @@
-import { composeWithDevTools } from '@redux-devtools/extension';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 
-import { customMiddleware } from 'store/middlewares';
-import { itemsReducer, usersReducer } from 'store/reducers/';
+import { customMiddleware } from './middlewares/index';
+import { itemsReducer, usersReducer } from './reducers';
 
 export const rootReducer = combineReducers({
   items: itemsReducer,
   users: usersReducer,
 });
 
+const initialState = {
+  users: ['Tina', 'Mike'],
+  items: ['goods', 'clothes', 'toys'],
+};
+
+// export const store = createStore(
+//   rootReducer,
+//   {
+//     users: ['Tina', 'Mike'],
+//     items: ['goods', 'clothes', 'toys'],
+//   },
+//   composeWithDevTools(applyMiddleware(customMiddleware)),
+// );
+
 export const store = createStore(
   rootReducer,
-  {
-    users: ['Tina', 'Mike'],
-    items: ['goods', 'clothes', 'toys'],
-  },
-  composeWithDevTools(applyMiddleware(customMiddleware)),
+  initialState,
+  applyMiddleware(customMiddleware),
 );
-
 export type AppStoreType = ReturnType<typeof rootReducer>;

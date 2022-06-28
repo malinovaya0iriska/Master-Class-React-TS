@@ -1,6 +1,6 @@
 import { AnyAction, Middleware, Store } from 'redux';
 
-import { AppStoreType } from 'store';
+import { AppStoreType } from '../store';
 
 export type CustomMiddlewareFunction<S, R> = (store: Store<S>) => R;
 

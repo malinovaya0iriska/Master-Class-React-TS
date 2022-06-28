@@ -1,6 +1,6 @@
 import { Store } from 'redux';
 
-import { AppStoreType } from 'store';
+import { AppStoreType } from '../store';
 
 export type ItemsStateType = string[];
 
