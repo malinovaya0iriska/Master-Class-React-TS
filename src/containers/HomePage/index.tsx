@@ -1,19 +1,16 @@
 import { FC } from 'react';
 
+import './style.css';
 import { HomePageProps } from './types';
 
-import { Button } from 'components/Button';
-import { ButtonGroup } from 'components/ButtonGroup';
+import { Partners, ShopQuality } from 'components';
+import { BestSeller } from 'containers';
 
 export const HomePage: FC<HomePageProps> = () => (
-  <>
-    <h1>Home Page</h1>
-    <Button>Default</Button>
-    <Button type="primary">Primary</Button>
-    <p>Button Group </p>
-    <ButtonGroup>
-      <Button type="primary"> Primary</Button>
-      <Button> Default</Button>
-    </ButtonGroup>
-  </>
+  <div className="homepage-container">
+    <div className="cover-image" />
+    <ShopQuality />
+    <BestSeller />
+    <Partners />
+  </div>
 );
