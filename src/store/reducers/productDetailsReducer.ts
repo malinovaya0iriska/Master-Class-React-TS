@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 
-import { ProductDetailAction, ProductDetailsReducerAction } from 'store/actions';
+import { ProductDetailsAction, ProductDetailsReducerAction } from 'store/actions';
 
 export interface ProductDetails {
   page: number;
@@ -35,7 +35,9 @@ export const productDetailsReducer: Reducer<
   { type, payload }: ProductDetailsReducerAction,
 ): ProductDetails => {
   switch (type) {
-    case ProductDetailAction.SET_PRODUCTS_DETAILS:
+    case ProductDetailsAction.SET_PRODUCTS_DETAILS:
+      // eslint-disable-next-line no-debugger
+      debugger;
       return payload;
     default:
       return state;

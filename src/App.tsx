@@ -8,7 +8,7 @@ import { ReturnComponentType } from './types';
 
 import { HeaderNavigation } from 'components';
 import { ROUTE } from 'constants/routes';
-import { AllProducts, Checkout, HomePage } from 'containers/';
+import { AllProducts, Checkout, HomePage } from 'containers';
 import { store } from 'store';
 
 export const App: FC = (): ReturnComponentType => (

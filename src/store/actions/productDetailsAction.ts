@@ -4,27 +4,26 @@ import { ProductDetails } from 'store/reducers';
 export type ProductDetailsReducerAction = ProductDetailsSetAction &
   ProductDetailsFetchAction;
 export interface ProductDetailsSetAction {
-  type: typeof ProductDetailAction.SET_PRODUCTS_DETAILS;
+  type: typeof ProductDetailsAction.SET_PRODUCTS_DETAILS;
   payload: ProductDetails;
 }
 
 export interface ProductDetailsFetchAction {
-  type: typeof ProductDetailAction.FETCH_PRODUCTS_DETAILS;
+  type: typeof ProductDetailsAction.FETCH_PRODUCTS_DETAILS;
 }
-
-class ProductDetailAction {
+class ProductDetailsAction {
   static readonly FETCH_PRODUCTS_DETAILS = 'FETCH_PRODUCTS_DETAILS';
 
   static readonly SET_PRODUCTS_DETAILS = 'SET_PRODUCTS_DETAILS';
 
   fetch = (): ProductDetailsFetchAction => ({
-    type: ProductDetailAction.FETCH_PRODUCTS_DETAILS,
+    type: ProductDetailsAction.FETCH_PRODUCTS_DETAILS,
   });
 
   set = (productDetails: ProductDetails): ProductDetailsSetAction => ({
-    type: ProductDetailAction.SET_PRODUCTS_DETAILS,
+    type: ProductDetailsAction.SET_PRODUCTS_DETAILS,
     payload: productDetails,
   });
 }
 
-export default ProductDetailAction;
+export default ProductDetailsAction;

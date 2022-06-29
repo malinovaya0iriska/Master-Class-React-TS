@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-plusplus */
 const fs = require('fs');
 const path = require('path');
 
@@ -8,10 +5,17 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 
+const { hasProductInCategory } = require('./utils');
+
 const app = express();
 
 const productsJsonPath = path.join(__dirname, '/products.json');
+const productFiltersJsonPath = path.join(__dirname, '/productFilters.json');
+
 const products = JSON.parse(fs.readFileSync(productsJsonPath, { encoding: 'utf-8' }));
+const productFilters = JSON.parse(
+  fs.readFileSync(productFiltersJsonPath, { encoding: 'utf-8' }),
+);
 
 app.use(bodyParser.json());
 
@@ -19,24 +23,36 @@ app.use(bodyParser.json());
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+/** Get Product Filters
+ * http://localhost:1234/productFilters
+ */
+app.get('/productFilters', (req, res) => {
+  res.json({ productFilters });
+});
+
 /** Get All Products
- * Query params - page/size
+ * Query params - page/size/category
  * http://localhost:1234/products?page=2&size=3
  * http://localhost:1234/products?size=3
  * http://localhost:1234/products
  */
 app.get('/products', (req, res) => {
-  const { page, size } = req.query;
+  const { page, size, category } = req.query;
   const data = {};
   let productsToReturn = [];
-  if ((page && size) || size) {
+
+  if ((page && size) || size || category) {
     let currentPage = 1;
     let currentSize = 0;
     const pageInt = parseInt(page, 10) || 1;
-    const sizeInt = parseInt(size, 10);
+    const sizeInt = parseInt(size, 10) || products.length;
     data.page = pageInt;
 
     products.forEach(product => {
+      if (category && !hasProductInCategory(category, product.category)) {
+        return;
+      }
+
       if (currentSize === sizeInt) {
         currentPage++;
         currentSize = 0;
@@ -50,6 +66,8 @@ app.get('/products', (req, res) => {
 
       currentSize++;
     });
+
+    data.totalPages = currentPage;
   } else {
     productsToReturn = products;
   }
@@ -74,7 +92,7 @@ app.post('/product', (req, res) => {
 
   if (product.id) {
     const productId = product.id;
-    const currentIndex = products.findIndex(productItem => productItem.id === productId);
+    const currentIndex = products.findIndex(item => item.id === productId);
 
     product.variants.forEach((variant, index) => {
       if (!variant.id) {
