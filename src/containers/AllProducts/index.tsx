@@ -5,7 +5,7 @@ import { Component, ReactNode } from 'react';
 
 import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 
-import { ProductCard } from 'components';
+import { AllProductsSideBar, ProductCard } from 'components';
 import {
   AllProductsPageProps,
   AllProductsStateProps,
@@ -15,7 +15,6 @@ import { UserAction, ShopAction } from 'store/actions';
 import { AppStateType } from 'store/reducers';
 import { ReturnComponentType } from 'types';
 import './style.css';
-import { Checkbox } from 'ui-components';
 
 class AllProducts extends Component<AllProductsPageProps> {
   componentDidMount(): void {
@@ -37,10 +36,16 @@ class AllProducts extends Component<AllProductsPageProps> {
   };
 
   render(): ReturnComponentType {
+    const { productFilters, userFilters, updateUserFilters } = this.props;
     return (
       <div className="all-products-page-container">
-        <Checkbox onChange={() => {}} />
-        {this.renderAllProductsList()}
+        <AllProductsSideBar
+          onUpdateUserFilters={updateUserFilters}
+          userFilters={userFilters}
+          productFilters={productFilters}
+        />
+
+        <div className="all-products-container">{this.renderAllProductsList()}</div>
       </div>
     );
   }
