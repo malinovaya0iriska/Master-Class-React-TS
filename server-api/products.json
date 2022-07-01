@@ -1,109 +1,109 @@
 [
     {
-        "id": "prod-1",
-        "category": [ "Men", "Long Sleeve", "Slim Fit", "BestSeller" ],
-        "title": "Formal Dress Shirts Casual Long Sleeve Slim Fit",
-        "variants": [
-            {
-                "id": "var-1123",
-                "size": "XS",
-                "color": "blue",
-                "price": "$25",
-                "stock": 0,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
-            },
-            {
-                "id": "var-1",
-                "size": "S",
-                "color": "blue",
-                "price": "$25",
-                "stock": 165,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
-            },
-            {
-                "id": "var-2",
-                "size": "M",
-                "color": "blue",
-                "price": "$25",
-                "stock": 183,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
-            },
-            {
-                "id": "var-3",
-                "size": "L",
-                "color": "blue",
-                "price": "$25",
-                "stock": 125,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
-            },
-            {
-                "id": "var-4",
-                "size": "XS",
-                "color": "black",
-                "price": "$25",
-                "stock": 267,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Black.png"
-            },
-            {
-                "id": "var-5",
-                "size": "M",
-                "color": "black",
-                "price": "$25",
-                "stock": 123,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Black.png"
-            },
-            {
-                "id": "var-6",
-                "size": "XL",
-                "color": "black",
-                "price": "$25",
-                "stock": 66,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Black.png"
-            },
-            {
-                "id": "var-7",
-                "size": "S",
-                "color": "violet",
-                "price": "$25",
-                "stock": 99,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
-            },
-            {
-                "id": "var-8",
-                "size": "M",
-                "color": "violet",
-                "price": "$25",
-                "stock": 154,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
-            },
-            {
-                "id": "var-9",
-                "size": "L",
-                "color": "violet",
-                "price": "$25",
-                "stock": 153,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
-            },
-            {
-                "id": "var-91",
-                "size": "XL",
-                "color": "violet",
-                "price": "$25",
-                "stock": 0,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
-            }
-        ]
+      "id": "prod-1",
+      "category": ["Men", "Long Sleeve", "Slim Fit", "Best Seller"],
+      "title": "Formal Dress Shirts Casual Long Sleeve Slim Fit",
+      "variants": [
+        {
+          "id": "var-1123",
+          "size": "XS",
+          "color": "blue",
+          "price": "$25",
+          "stock": 0,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
+        },
+        {
+          "id": "var-1",
+          "size": "S",
+          "color": "blue",
+          "price": "$25",
+          "stock": 165,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
+        },
+        {
+          "id": "var-2",
+          "size": "M",
+          "color": "blue",
+          "price": "$25",
+          "stock": 183,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
+        },
+        {
+          "id": "var-3",
+          "size": "L",
+          "color": "blue",
+          "price": "$25",
+          "stock": 125,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
+        },
+        {
+          "id": "var-4",
+          "size": "XS",
+          "color": "black",
+          "price": "$25",
+          "stock": 267,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Black.png"
+        },
+        {
+          "id": "var-5",
+          "size": "M",
+          "color": "black",
+          "price": "$25",
+          "stock": 123,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Black.png"
+        },
+        {
+          "id": "var-6",
+          "size": "XL",
+          "color": "black",
+          "price": "$25",
+          "stock": 66,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Black.png"
+        },
+        {
+          "id": "var-7",
+          "size": "S",
+          "color": "violet",
+          "price": "$25",
+          "stock": 99,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
+        },
+        {
+          "id": "var-8",
+          "size": "M",
+          "color": "violet",
+          "price": "$25",
+          "stock": 154,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
+        },
+        {
+          "id": "var-9",
+          "size": "L",
+          "color": "violet",
+          "price": "$25",
+          "stock": 153,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
+        },
+        {
+          "id": "var-91",
+          "size": "XL",
+          "color": "violet",
+          "price": "$25",
+          "stock": 0,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Violet.png"
+        }
+      ]
     },
     {
         "id": "prod-2",
@@ -264,37 +264,37 @@
         ]
     },
     {
-        "id": "prod-5",
-        "category": ["Women", "Dress", "Best Seller"],
-        "title": "Tiered Wave Shirt Dress",
-        "variants": [
-            {
-                "id": "var-25",
-                "size": "S",
-                "color": "navy & white",
-                "price": "$55",
-                "stock": 67,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Tiered%20Wave%20Shirt%20Dress%20-%20Navy%20&%20White.png"
-            },
-            {
-                "id": "var-26",
-                "size": "M",
-                "color": "navy & white",
-                "price": "$55",
-                "stock": 55,
-                "discount": "$5",
-                "image": "http://localhost:1234/public/images/Tiered%20Wave%20Shirt%20Dress%20-%20Navy%20&%20White.png"
-            },
-            {
-                "id": "var-27",
-                "size": "L",
-                "color": "navy & white",
-                "price": "$55",
-                "stock": 100,
-                "discount": "15%",
-                "image": "http://localhost:1234/public/images/Tiered%20Wave%20Shirt%20Dress%20-%20Navy%20&%20White.png"
-            }
-        ]
+      "id": "prod-5",
+      "category": ["Women", "Dress", "Best Seller", "Hot This Month"],
+      "title": "Tiered Wave Shirt Dress",
+      "variants": [
+        {
+          "id": "var-25",
+          "size": "S",
+          "color": "navy & white",
+          "price": "$55",
+          "stock": 67,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Tiered%20Wave%20Shirt%20Dress%20-%20Navy%20&%20White.png"
+        },
+        {
+          "id": "var-26",
+          "size": "M",
+          "color": "navy & white",
+          "price": "$55",
+          "stock": 55,
+          "discount": "$5",
+          "image": "http://localhost:1234/public/images/Tiered%20Wave%20Shirt%20Dress%20-%20Navy%20&%20White.png"
+        },
+        {
+          "id": "var-27",
+          "size": "L",
+          "color": "navy & white",
+          "price": "$55",
+          "stock": 100,
+          "discount": "15%",
+          "image": "http://localhost:1234/public/images/Tiered%20Wave%20Shirt%20Dress%20-%20Navy%20&%20White.png"
+        }
+      ]
     }
 ]

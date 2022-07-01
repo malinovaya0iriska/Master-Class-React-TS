@@ -1,7 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { ProductDetailsAction } from 'store/actions';
 import { rootReducer } from 'store/reducers';
 import { rootSaga } from 'store/sagas';
 
@@ -23,4 +22,4 @@ export const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-store.dispatch({ type: ProductDetailsAction.FETCH_PRODUCTS_DETAILS });
+// store.dispatch({ type: ProductDetailsAction.FETCH_PRODUCTS_DETAILS });

@@ -1,2 +1,14 @@
-export { default as ProductDetailsAction } from './productDetailsAction';
-export type { ProductDetailsReducerAction } from './productDetailsAction';
+export { default as UserAction } from './UserAction';
+export { default as ShopAction } from './ShopAction';
+
+export type { UserReducerAction, UpdateUserFiltersAction } from './UserAction';
+
+export type {
+  ShopReducerAction,
+  SetShopProductsAction,
+  SetBestSellerProductsAction,
+  FetchShopProductsAction,
+  FetchBestSellerProductsAction,
+  FetchShopProductsAndFilterAction,
+  SetShopProductsAndFilterAction,
+} from './ShopAction';

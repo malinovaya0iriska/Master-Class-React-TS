@@ -1,12 +1,10 @@
-import { CombinedState, combineReducers, Reducer } from 'redux';
+import { combineReducers } from 'redux';
 
-import type { ProductDetailsReducerAction } from 'store/actions';
-import { ProductDetails, productDetailsReducer } from 'store/reducers';
+import { shopReducer } from 'store/reducers/shopReducer';
+import { userReducer } from 'store/reducers/userReducer';
 
-export const rootReducer: Reducer<
-  CombinedState<{ productDetails: ProductDetails }>,
-  ProductDetailsReducerAction
-> = combineReducers({
-  productDetails: productDetailsReducer,
+export const rootReducer = combineReducers({
+  shop: shopReducer,
+  user: userReducer,
 });
 export type AppStateType = ReturnType<typeof rootReducer>;

@@ -1,10 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const express = require('express');
-
+const path = require('path');
+const fs = require('fs');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const { hasProductInCategory } = require('./utils');
 
 const app = express();
@@ -44,8 +42,8 @@ app.get('/products', (req, res) => {
   if ((page && size) || size || category) {
     let currentPage = 1;
     let currentSize = 0;
-    const pageInt = parseInt(page, 10) || 1;
-    const sizeInt = parseInt(size, 10) || products.length;
+    const pageInt = parseInt(page) || 1;
+    const sizeInt = parseInt(size) || products.length;
     data.page = pageInt;
 
     products.forEach(product => {
@@ -92,12 +90,10 @@ app.post('/product', (req, res) => {
 
   if (product.id) {
     const productId = product.id;
-    const currentIndex = products.findIndex(item => item.id === productId);
+    const currentIndex = products.findIndex(product => product.id === productId);
 
     product.variants.forEach((variant, index) => {
-      if (!variant.id) {
-        variant.id = `var-${+new Date() + index}`;
-      }
+      if (!variant.id) variant.id = `var-${+new Date() + index}`;
     });
 
     products[currentIndex] = product;

@@ -3,34 +3,32 @@
 
 import { Component, ReactNode } from 'react';
 
-import { connect, MapStateToProps } from 'react-redux';
+import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 
 import { ProductCard } from 'components';
 import {
   AllProductsPageProps,
   AllProductsStateProps,
+  AllProductsDispatchToProps,
 } from 'containers/AllProducts/types';
+import { UserAction, ShopAction } from 'store/actions';
 import { AppStateType } from 'store/reducers';
 import { ReturnComponentType } from 'types';
 import './style.css';
 
 class AllProducts extends Component<AllProductsPageProps> {
-  constructor(props: AllProductsPageProps) {
-    super(props);
+  componentDidMount(): void {
+    const { shopProducts, fetchShopProductsAndFilters } = this.props;
+
+    if (!shopProducts.products.length) {
+      fetchShopProductsAndFilters();
+    }
   }
 
-  // componentDidMount(): void {
-  //   const { productDetails } = this.props;
-
-  //   if (!productDetails.products.length) {
-  //     this.props.fetchShopProducts({});
-  //   }
-  // }
-
   renderAllProductsList = (): ReactNode => {
-    const { productDetails } = this.props;
-    return productDetails
-      ? productDetails.products.map(({ title, variants, id }) => (
+    const { shopProducts } = this.props;
+    return shopProducts
+      ? shopProducts.products.map(({ title, variants, id }) => (
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           <ProductCard key={id} name={title} url={variants[0].image} />
         ))
@@ -46,12 +44,31 @@ class AllProducts extends Component<AllProductsPageProps> {
   }
 }
 
-const mapStatetoProps: MapStateToProps<
+const mapStateToProps: MapStateToProps<
   AllProductsStateProps,
   AllProductsStateProps,
   AppStateType
-> = state => ({
-  productDetails: state.productDetails,
-});
+> = state => {
+  const { shopProducts, productFilters } = state.shop;
+  const { filters } = state.user;
+  return {
+    shopProducts,
+    productFilters,
+    userFilters: filters,
+  };
+};
 
-export default connect(mapStatetoProps)(AllProducts);
+const mapDispatchToProps: MapDispatchToPropsFunction<
+  AllProductsDispatchToProps,
+  AllProductsStateProps
+> = dispatch => {
+  const { fetchShopProducts, fetchShopProductsAndFilters } = new ShopAction();
+  const { updateUserFilters } = new UserAction();
+  return {
+    fetchShopProducts: options => dispatch(fetchShopProducts(options)),
+    fetchShopProductsAndFilters: () => dispatch(fetchShopProductsAndFilters()),
+    updateUserFilters: filters => dispatch(updateUserFilters(filters)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);

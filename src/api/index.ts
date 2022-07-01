@@ -1,12 +1,35 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable class-methods-use-this */
 import axios from 'axios';
 
-import { FIVE, ONE } from 'constants/index';
+import { EMPTY_STRING } from 'constants/index';
+import { ProductFilters } from 'store/reducers';
 
-class ProductDetailsAPI {
-  getProducts = (page?: number, size?: number) =>
-    axios.get(`http://localhost:1234/products?page=${page || ONE}&size=${size || FIVE}`);
+export interface GetProducsOptions {
+  page?: number;
+  size?: number;
+  category?: string[];
 }
 
-export default ProductDetailsAPI;
+export interface ProductFiltersAPIResponse {
+  productFilters: ProductFilters;
+}
+
+class ShopAPI {
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  getProducts = (options: GetProducsOptions) => {
+    const { page, size, category } = options;
+    const pageQueryParam = `page=${page || EMPTY_STRING}`;
+    const sizeQueryParam = `&size=${size || EMPTY_STRING}`;
+    const categoryQueryParam = `&category=${
+      category ? category.join('&category=') : EMPTY_STRING
+    }`;
+    return axios.get(
+      `http://localhost:1234/products?${pageQueryParam}${sizeQueryParam}${categoryQueryParam}`,
+    );
+  };
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  getProductFilters = () => axios.get('http://localhost:1234/productFilters');
+}
+
+export default ShopAPI;

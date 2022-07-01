@@ -18,6 +18,7 @@ export const App: FC = (): ReturnComponentType => (
         <HeaderNavigation />
         <Routes>
           <Route element={<HomePage />} path={ROUTE.HOME} />
+          {/* @ts-ignore */}
           <Route element={<AllProducts />} path={ROUTE.ALL_PRODUCTS} />
           <Route element={<Checkout />} path={ROUTE.CHECKOUT} />
         </Routes>
