@@ -15,6 +15,7 @@ import { UserAction, ShopAction } from 'store/actions';
 import { AppStateType } from 'store/reducers';
 import { ReturnComponentType } from 'types';
 import './style.css';
+import { Checkbox } from 'ui-components';
 
 class AllProducts extends Component<AllProductsPageProps> {
   componentDidMount(): void {
@@ -37,7 +38,10 @@ class AllProducts extends Component<AllProductsPageProps> {
 
   render(): ReturnComponentType {
     return (
-      <div className="all-products-page-container">{this.renderAllProductsList()}</div>
+      <div className="all-products-page-container">
+        <Checkbox onChange={() => {}} />
+        {this.renderAllProductsList()}
+      </div>
     );
   }
 }
