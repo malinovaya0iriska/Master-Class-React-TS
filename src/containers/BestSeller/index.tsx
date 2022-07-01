@@ -1,24 +1,59 @@
-import { FC } from 'react';
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+import { Component, ReactNode } from 'react';
+
+import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
+
+import { BestSellerProps, BestSellerStateProps, BestSellerDispatchProps } from './types';
 
 import { ProductCard } from 'components';
+import { ShopAction } from 'store/actions';
+import { AppStateType } from 'store/reducers';
 import './style.css';
+import { ReturnComponentType } from 'types';
 
-export const BestSeller: FC = () => (
-  <div className="best-seller-container">
-    <h2>Best Seller</h2>
-    <div className="best-seller-products">
-      <ProductCard
-        url="http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Long%20Sleeve%20Slim%20Fit%20-%20Blue.png"
-        name="Formal Dress Shirts Casual Long Sleeve Slim Fit"
-      />
-      <ProductCard
-        url="http://localhost:1234/public/images/Formal%20Dress%20Shirts%20Casual%20Short%20Sleeve%20Slim%20Fit%20-%20Blue.png"
-        name="Formal Dress Shirts Casual Short Sleeve Slim Fit"
-      />
-      <ProductCard
-        url="http://localhost:1234/public/images/Tiered%20Wave%20Shirt%20Dress%20-%20Navy%20&%20White.png"
-        name="Tiered Wave Shirt Dress"
-      />
-    </div>
-  </div>
-);
+class BestSeller extends Component<BestSellerProps> {
+  componentDidMount(): void {
+    const { bestSellerProducts, fetchAllBestSellerProducts } = this.props;
+    if (!bestSellerProducts.length) {
+      fetchAllBestSellerProducts();
+    }
+  }
+
+  renderBestSellerProducts = (): ReactNode => {
+    const { bestSellerProducts } = this.props;
+
+    return bestSellerProducts.map(({ title, id, variants }) => (
+      <ProductCard key={id} url={variants[0].image} name={title} />
+    ));
+  };
+
+  render(): ReturnComponentType {
+    return (
+      <div className="best-seller-container">
+        <h2>Best Seller</h2>
+        <div className="best-seller-products">{this.renderBestSellerProducts()}</div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps: MapStateToProps<
+  BestSellerStateProps,
+  {},
+  AppStateType
+> = state => ({
+  bestSellerProducts: state.shop.bestSellerProducts,
+});
+
+const mapDispatchToProps: MapDispatchToPropsFunction<
+  BestSellerDispatchProps,
+  {}
+> = dispatch => {
+  const { fetchAllBestSellerProducts } = new ShopAction();
+
+  return {
+    fetchAllBestSellerProducts: () => dispatch(fetchAllBestSellerProducts()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BestSeller);

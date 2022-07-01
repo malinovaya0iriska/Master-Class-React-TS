@@ -37,9 +37,7 @@ class AllProducts extends Component<AllProductsPageProps> {
 
   render(): ReturnComponentType {
     return (
-      <div className="all-products-page-container">
-        All Products {this.renderAllProductsList()}
-      </div>
+      <div className="all-products-page-container">{this.renderAllProductsList()}</div>
     );
   }
 }
