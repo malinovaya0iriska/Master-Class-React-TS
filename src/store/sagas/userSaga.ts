@@ -1,20 +1,57 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 
-import ShopAPI from 'api';
-import { UserAction, ShopAction, UpdateUserFiltersAction } from 'store/actions';
-import { ShopProducts } from 'store/reducers';
+import ShopAPI, { GetProducsOptions } from 'api';
+import { ONE } from 'constants/index';
+import {
+  UserAction,
+  ShopAction,
+  UpdateUserFiltersAction,
+  UpdateUserShopProductPageAction,
+} from 'store/actions';
+import { AppStateType, ShopProducts, User } from 'store/reducers';
 import { convertFiltersToCategories } from 'utils';
 
 function* workerUpdateUserFiltersSaga(action: UpdateUserFiltersAction) {
   const shopAPI = new ShopAPI();
   const shopAction = new ShopAction();
+  const userAction = new UserAction();
+
+  const user: User = yield select((state: AppStateType) => state.user);
+
+  const options: GetProducsOptions = {
+    page: ONE,
+    size: user.shopProductsPageSize,
+    category: convertFiltersToCategories(action.filters),
+  };
+  try {
+    // @ts-ignore
+    const response = yield call(shopAPI.getProducts, options);
+    const shopProducts = response.data as ShopProducts;
+
+    yield put(shopAction.setShopProducts(shopProducts));
+    yield put(userAction.updateUserShopProductsPage(options.page!));
+  } catch (err) {
+    // TODO: Change in the future
+    console.log(err);
+  }
+}
+
+function* workerUpdateUserShopProductsSaga(action: UpdateUserShopProductPageAction) {
+  const shopAPI = new ShopAPI();
+  const shopAction = new ShopAction();
+
+  const user: User = yield select((state: AppStateType) => state.user);
+
+  const options: GetProducsOptions = {
+    page: action.shopProductsPage,
+    size: user.shopProductsPageSize,
+    category: convertFiltersToCategories(user.filters),
+  };
 
   try {
     // @ts-ignore
-    const response = yield call(shopAPI.getProducts, {
-      category: convertFiltersToCategories(action.filters),
-    });
+    const response = yield call(shopAPI.getProducts, options);
     const shopProducts = response.data as ShopProducts;
 
     yield put(shopAction.setShopProducts(shopProducts));
@@ -26,4 +63,8 @@ function* workerUpdateUserFiltersSaga(action: UpdateUserFiltersAction) {
 
 export function* watchUserSaga() {
   yield takeLatest(UserAction.UPDATE_USER_FILTERS, workerUpdateUserFiltersSaga);
+  yield takeLatest(
+    UserAction.UPDATE_USER_SHOP_PRODUCTS_PAGE,
+    workerUpdateUserShopProductsSaga,
+  );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/prefer-stateless-function */
 
@@ -5,7 +6,7 @@ import { Component, ReactNode } from 'react';
 
 import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 
-import { AllProductsSideBar, ProductCard } from 'components';
+import { AllProductsSideBar, ProductCard, Pagination } from 'components';
 import {
   AllProductsPageProps,
   AllProductsStateProps,
@@ -35,8 +36,21 @@ class AllProducts extends Component<AllProductsPageProps> {
       : null;
   };
 
+  handlePageChange = (selectedPage: number): void => {
+    const { userSelectedPage, updateUserShopProductsPage } = this.props;
+    if (selectedPage !== userSelectedPage) {
+      updateUserShopProductsPage(selectedPage);
+    }
+  };
+
   render(): ReturnComponentType {
-    const { productFilters, userFilters, updateUserFilters } = this.props;
+    const {
+      productFilters,
+      userFilters,
+      updateUserFilters,
+      shopProducts,
+      userSelectedPage,
+    } = this.props;
     return (
       <div className="all-products-page-container">
         <AllProductsSideBar
@@ -45,7 +59,14 @@ class AllProducts extends Component<AllProductsPageProps> {
           productFilters={productFilters}
         />
 
-        <div className="all-products-container">{this.renderAllProductsList()}</div>
+        <div className="all-products-container">
+          <div className="all-products">{this.renderAllProductsList()}</div>
+          <Pagination
+            overrideSelectedPage={userSelectedPage}
+            onChange={this.handlePageChange}
+            numberOfPages={shopProducts.totalPages}
+          />
+        </div>
       </div>
     );
   }
@@ -57,11 +78,12 @@ const mapStateToProps: MapStateToProps<
   AppStateType
 > = state => {
   const { shopProducts, productFilters } = state.shop;
-  const { filters } = state.user;
+  const { filters, shopProductsPage } = state.user;
   return {
     shopProducts,
     productFilters,
     userFilters: filters,
+    userSelectedPage: shopProductsPage,
   };
 };
 
@@ -70,11 +92,13 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
   AllProductsStateProps
 > = dispatch => {
   const { fetchShopProducts, fetchShopProductsAndFilters } = new ShopAction();
-  const { updateUserFilters } = new UserAction();
+  const { updateUserFilters, updateUserShopProductsPage } = new UserAction();
   return {
     fetchShopProducts: options => dispatch(fetchShopProducts(options)),
     fetchShopProductsAndFilters: () => dispatch(fetchShopProductsAndFilters()),
     updateUserFilters: filters => dispatch(updateUserFilters(filters)),
+    updateUserShopProductsPage: shopProductsPage =>
+      dispatch(updateUserShopProductsPage(shopProductsPage)),
   };
 };
 

@@ -18,6 +18,7 @@ class ShopAPI {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   getProducts = (options: GetProducsOptions) => {
     const { page, size, category } = options;
+
     const pageQueryParam = `page=${page || EMPTY_STRING}`;
     const sizeQueryParam = `&size=${size || EMPTY_STRING}`;
     const categoryQueryParam = `&category=${

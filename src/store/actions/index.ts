@@ -1,7 +1,11 @@
 export { default as UserAction } from './UserAction';
 export { default as ShopAction } from './ShopAction';
 
-export type { UserReducerAction, UpdateUserFiltersAction } from './UserAction';
+export type {
+  UserReducerAction,
+  UpdateUserFiltersAction,
+  UpdateUserShopProductPageAction,
+} from './UserAction';
 
 export type {
   ShopReducerAction,

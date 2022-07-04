@@ -6,9 +6,13 @@ import { ProductFilters } from 'store/reducers/shopReducer';
 
 export interface User {
   filters: ProductFilters;
+  shopProductsPage: number;
+  shopProductsPageSize: number;
 }
 
 const userInitialState: User = {
+  shopProductsPage: 1,
+  shopProductsPageSize: 2,
   filters: {
     gender: [],
     category: [],
@@ -23,6 +27,8 @@ export const userReducer: Reducer<User, UserReducerAction> = (
   switch (action.type) {
     case UserAction.UPDATE_USER_FILTERS:
       return update(state, { filters: { $set: action.filters } });
+    case UserAction.UPDATE_USER_SHOP_PRODUCTS_PAGE:
+      return update(state, { shopProductsPage: { $set: action.shopProductsPage } });
     default:
       return state;
   }

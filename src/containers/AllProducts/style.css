@@ -1,13 +1,28 @@
 .all-products-page-container {
+    margin-top: 100px;
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+.all-products-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.all-products-page-container .all-products {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 100px;
 }
 
 .all-products-page-container .product-item-container {
-    flex-basis: 25%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 100px;
+    margin-right: 40px;
+    margin-left: 40px;
+    height: 300px;
 }
