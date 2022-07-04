@@ -6,7 +6,7 @@ import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redu
 import { BestSellerProps, BestSellerStateProps, BestSellerDispatchProps } from './types';
 
 import { ProductCard } from 'components';
-import { ShopAction } from 'store/actions';
+import { ShopAction, UserAction } from 'store/actions';
 import { AppStateType } from 'store/reducers';
 import './style.css';
 import { ReturnComponentType } from 'types';
@@ -20,10 +20,10 @@ class BestSeller extends Component<BestSellerProps> {
   }
 
   renderBestSellerProducts = (): ReactNode => {
-    const { bestSellerProducts } = this.props;
+    const { bestSellerProducts, addToCart } = this.props;
 
-    return bestSellerProducts.map(({ title, id, variants }) => (
-      <ProductCard key={id} url={variants[0].image} name={title} />
+    return bestSellerProducts.map(product => (
+      <ProductCard key={product.id} product={product} addToCart={addToCart} />
     ));
   };
 
@@ -50,9 +50,11 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
   {}
 > = dispatch => {
   const { fetchAllBestSellerProducts } = new ShopAction();
+  const { addToCart } = new UserAction();
 
   return {
     fetchAllBestSellerProducts: () => dispatch(fetchAllBestSellerProducts()),
+    addToCart: productPurchase => dispatch(addToCart(productPurchase)),
   };
 };
 

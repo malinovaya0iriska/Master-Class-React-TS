@@ -27,13 +27,12 @@ class AllProducts extends Component<AllProductsPageProps> {
   }
 
   renderAllProductsList = (): ReactNode => {
-    const { shopProducts } = this.props;
-    return shopProducts
-      ? shopProducts.products.map(({ title, variants, id }) => (
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          <ProductCard key={id} name={title} url={variants[0].image} />
-        ))
-      : null;
+    const { shopProducts, addToCart } = this.props;
+    return shopProducts.products.map(product => (
+      <div key={product.id} className="product-item-container">
+        <ProductCard product={product} addToCart={addToCart} />
+      </div>
+    ));
   };
 
   handlePageChange = (selectedPage: number): void => {
@@ -92,13 +91,14 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
   AllProductsStateProps
 > = dispatch => {
   const { fetchShopProducts, fetchShopProductsAndFilters } = new ShopAction();
-  const { updateUserFilters, updateUserShopProductsPage } = new UserAction();
+  const { updateUserFilters, updateUserShopProductsPage, addToCart } = new UserAction();
   return {
     fetchShopProducts: options => dispatch(fetchShopProducts(options)),
     fetchShopProductsAndFilters: () => dispatch(fetchShopProductsAndFilters()),
     updateUserFilters: filters => dispatch(updateUserFilters(filters)),
     updateUserShopProductsPage: shopProductsPage =>
       dispatch(updateUserShopProductsPage(shopProductsPage)),
+    addToCart: productPurchase => dispatch(addToCart(productPurchase)),
   };
 };
 

@@ -9,8 +9,22 @@ export const convertFiltersToCategories = (filters: ProductFilters): string[] =>
 
   Object.keys(filters).forEach(filterCategory => {
     const categoryFilters = filters[filterCategory as keyof ProductFilters];
-    if (categoryFilters.length) categories = categories.concat(categoryFilters);
+    if (categoryFilters.length) {
+      categories = categories.concat(categoryFilters);
+    }
   });
 
   return categories;
+};
+
+export const omit = (obj: any, keysToOmit: string[]): any => {
+  const newObj: any = {};
+
+  Object.keys(obj).forEach(key => {
+    if (!keysToOmit.includes(key)) {
+      newObj[key] = obj[key];
+    }
+  });
+
+  return newObj;
 };

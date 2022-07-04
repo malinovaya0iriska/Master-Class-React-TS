@@ -3,6 +3,12 @@ import { Reducer } from 'redux';
 
 import { ShopAction, ShopReducerAction } from 'store/actions';
 
+export type ProductVariantCompleteDetails = Omit<ProductVariant, 'id'> &
+  Omit<Product, 'id' | 'variants'> & {
+    productId: string;
+    variantId: string;
+  };
+
 export interface ProductVariant {
   id: string;
   size: string;

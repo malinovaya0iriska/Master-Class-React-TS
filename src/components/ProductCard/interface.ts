@@ -1,4 +1,10 @@
+import { Product, ProductPurchase } from 'store/reducers';
+
 export interface ProductCardProps {
-  url: string;
-  name: string;
+  product: Product;
+  addToCart(product: ProductPurchase): any;
+}
+
+export interface ProductCardState {
+  showDetails: boolean;
 }

@@ -2,7 +2,14 @@ import update from 'immutability-helper';
 import { Reducer } from 'redux';
 
 import { UserAction, UserReducerAction } from 'store/actions';
-import { ProductFilters } from 'store/reducers/shopReducer';
+import {
+  ProductFilters,
+  ProductVariantCompleteDetails,
+} from 'store/reducers/shopReducer';
+
+export interface ProductPurchase extends ProductVariantCompleteDetails {
+  quantity: number;
+}
 
 export interface User {
   filters: ProductFilters;

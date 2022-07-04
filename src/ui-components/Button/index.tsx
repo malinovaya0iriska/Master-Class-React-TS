@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { ButtonProps } from './interface';
+import { ButtonProps, DefaultButtonPropsType } from './interface';
 
 import { ReturnComponentType } from 'types';
 
 import './style.css';
 
-export const Button: React.FC<ButtonProps> = ({
+// eslint-disable-next-line no-undef
+export const Button: React.FC<DefaultButtonPropsType & ButtonProps> = ({
   children,
-  type = 'default',
+  styleType = 'default',
   selected,
   onClick,
   className,
+  ...props
 }): ReturnComponentType => {
   const selectedClass = selected ? 'selected' : '';
 
@@ -19,7 +21,9 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       type="button"
       onClick={onClick}
-      className={`btn btn-${type} ${selectedClass} ${className || ''} `}
+      className={`btn btn-${styleType} ${selectedClass} ${className || ''} `}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
     >
       {children}
     </button>

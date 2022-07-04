@@ -1,11 +1,16 @@
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 export type ButtonType = 'primary' | 'default';
 
 export interface ButtonProps {
   className?: string;
   selected?: boolean;
-  type?: ButtonType;
+  styleType?: ButtonType;
   onClick: () => void;
-  children: ReactNode;
+  // children: ReactNode;
 }
+
+export type DefaultButtonPropsType = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;

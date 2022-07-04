@@ -5,8 +5,9 @@ export type {
   ProductFilters,
   ShopProducts,
   Shop,
+  ProductVariantCompleteDetails,
 } from 'store/reducers/shopReducer';
 export { rootReducer } from 'store/reducers/rootReducer';
 export { userReducer } from 'store/reducers/userReducer';
-export type { User } from 'store/reducers/userReducer';
+export type { User, ProductPurchase } from 'store/reducers/userReducer';
 export type { AppStateType } from './rootReducer';

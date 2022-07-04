@@ -5,6 +5,7 @@ export type {
   UserReducerAction,
   UpdateUserFiltersAction,
   UpdateUserShopProductPageAction,
+  AddToCartAction,
 } from './UserAction';
 
 export type {

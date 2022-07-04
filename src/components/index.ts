@@ -3,4 +3,8 @@ export { Partners } from './Partners';
 export { ProductCard } from './ProductCard';
 export { ShopQuality } from './ShopQuality';
 export { AllProductsSideBar } from './AllProductsSideBar';
+export { ProductCardModal } from './ProductCardModal';
+export { ProductCardModalQuantityUI } from './ProductCardModalQuantityUI';
+export { ProductCardModalPriceUI } from './ProductCardModalPriceUI';
+export { ProductCardModalVariantOptions } from './ProductCardModalVariantOptions';
 export { Pagination } from './Pagination';
