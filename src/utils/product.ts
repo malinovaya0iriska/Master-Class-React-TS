@@ -1,6 +1,14 @@
+import { CSSProperties } from 'react';
+
 import { omit } from './index';
 
-import { Product, ProductVariant, ProductVariantCompleteDetails } from 'store/reducers';
+import { ONE } from 'constants/index';
+import {
+  Product,
+  ProductPurchase,
+  ProductVariant,
+  ProductVariantCompleteDetails,
+} from 'store/reducers';
 
 export type InitialVariant = ProductVariantCompleteDetails | null;
 
@@ -67,3 +75,19 @@ export const getDiscountedPrice = (price: string, discount: string): number => {
 };
 
 export const parsePrice = (price: string): number => parseFloat(price.replace('$', ''));
+
+export const getSubtotalPrice = (product: ProductPurchase): number => {
+  const { discount, price, quantity } = product;
+
+  const currentPrice = discount ? getDiscountedPrice(price, discount) : parsePrice(price);
+
+  return currentPrice * quantity;
+};
+
+export const getBackgroundColorStyleForButton = (color: string): CSSProperties => {
+  const arrayColors = color.split('&');
+
+  return arrayColors.length > ONE
+    ? { backgroundImage: `linear-gradient(${arrayColors.join(',')})` }
+    : { backgroundColor: color };
+};

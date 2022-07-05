@@ -9,3 +9,4 @@ export { ProductCardModalPriceUI } from './ProductCardModalPriceUI';
 export { ProductCardModalVariantOptions } from './ProductCardModalVariantOptions';
 export { Pagination } from './Pagination';
 export { ShoppingCartProduct } from './ShoppingCartProduct';
+export { CheckoutPageProduct } from './CheckoutPageProduct';
