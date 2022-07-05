@@ -5,7 +5,8 @@ import { ProductFilters } from 'store/reducers/shopReducer';
 export type UserReducerAction =
   | UpdateUserFiltersAction
   | UpdateUserShopProductPageAction
-  | AddToCartAction;
+  | AddToCartAction
+  | RemoveToCartAction;
 
 export interface UpdateUserFiltersAction {
   type: typeof UserAction.UPDATE_USER_FILTERS;
@@ -22,12 +23,19 @@ export interface AddToCartAction {
   productPurchase: ProductPurchase;
 }
 
+export interface RemoveToCartAction {
+  type: typeof UserAction.REMOVE_TO_CART;
+  productPurchase: ProductPurchase;
+}
+
 class UserAction {
   static readonly UPDATE_USER_FILTERS = 'UPDATE_USER_FILTERS';
 
   static readonly UPDATE_USER_SHOP_PRODUCTS_PAGE = 'UPDATE_USER_SHOP_PRODUCTS_PAGE';
 
   static readonly ADD_TO_CART = 'ADD_TO_CART';
+
+  static readonly REMOVE_TO_CART = 'REMOVE_TO_CART';
 
   updateUserFilters = (filters: ProductFilters): UpdateUserFiltersAction => ({
     type: UserAction.UPDATE_USER_FILTERS,
@@ -43,6 +51,11 @@ class UserAction {
 
   addToCart = (productPurchase: ProductPurchase): AddToCartAction => ({
     type: UserAction.ADD_TO_CART,
+    productPurchase,
+  });
+
+  removeToCart = (productPurchase: ProductPurchase): RemoveToCartAction => ({
+    type: UserAction.REMOVE_TO_CART,
     productPurchase,
   });
 }

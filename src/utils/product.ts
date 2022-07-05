@@ -65,3 +65,5 @@ export const getDiscountedPrice = (price: string, discount: string): number => {
 
   return discountedPrice;
 };
+
+export const parsePrice = (price: string): number => parseFloat(price.replace('$', ''));

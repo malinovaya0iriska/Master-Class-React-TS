@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { ProductCardModalVariantOptionsProps } from './interface';
+import { ProductCardModalVariantOptionsProps } from './types';
 
 import { ONE } from 'constants/index';
 import { Button } from 'ui-components';

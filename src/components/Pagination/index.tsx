@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { PaginationProps, PaginationState } from './interface';
+import { PaginationProps, PaginationState } from './types';
 
 import { ONE } from 'constants/index';
 import { ReturnComponentType } from 'types';

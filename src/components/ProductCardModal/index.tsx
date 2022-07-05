@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from 'react';
 
-import { ProductCardModalProps, ProductCardModalState } from './interface';
+import { ProductCardModalProps, ProductCardModalState } from './types';
 
 import {
   ProductCardModalPriceUI,

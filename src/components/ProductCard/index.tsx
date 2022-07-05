@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ProductCardProps, ProductCardState } from './interface';
+import { ProductCardProps, ProductCardState } from './types';
 
 import { ProductCardModal } from 'components';
 import { ReturnComponentType } from 'types';

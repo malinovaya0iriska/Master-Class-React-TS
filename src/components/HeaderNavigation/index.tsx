@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import { ROUTE } from 'constants/routes';
 import './style.css';
+import { ShoppingCart } from 'containers';
 
 export const HeaderNavigation: FC = () => (
   <div className="header-nav-container">
@@ -16,7 +17,7 @@ export const HeaderNavigation: FC = () => (
       </NavLink>
     </div>
     <div className="nav-items-right">
-      <i className="nav-item fa fa-shopping-cart" />
+      <ShoppingCart />
     </div>
   </div>
 );

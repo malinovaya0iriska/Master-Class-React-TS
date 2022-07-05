@@ -15,6 +15,7 @@ export interface User {
   filters: ProductFilters;
   shopProductsPage: number;
   shopProductsPageSize: number;
+  cart: ProductPurchase[];
 }
 
 const userInitialState: User = {
@@ -25,6 +26,7 @@ const userInitialState: User = {
     category: [],
     trends: [],
   },
+  cart: [],
 };
 
 export const userReducer: Reducer<User, UserReducerAction> = (
@@ -36,6 +38,8 @@ export const userReducer: Reducer<User, UserReducerAction> = (
       return update(state, { filters: { $set: action.filters } });
     case UserAction.UPDATE_USER_SHOP_PRODUCTS_PAGE:
       return update(state, { shopProductsPage: { $set: action.shopProductsPage } });
+    case UserAction.ADD_TO_CART:
+      return update(state, { cart: { $push: [action.productPurchase] } });
     default:
       return state;
   }

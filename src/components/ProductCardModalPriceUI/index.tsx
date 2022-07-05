@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ProductCardModalPriceUIProps } from './interface';
+import { ProductCardModalPriceUIProps } from './types';
+
 import { getDiscountedPrice } from 'utils/product';
 
 export const ProductCardModalPriceUI: React.FC<ProductCardModalPriceUIProps> = ({
@@ -11,10 +12,10 @@ export const ProductCardModalPriceUI: React.FC<ProductCardModalPriceUIProps> = (
   const priceUI = (
     <p className="price-ui">
       {discount ? (
-        <React.Fragment>
+        <>
           <del className="old-price">{price}</del>
           <ins>${getDiscountedPrice(price, discount)}</ins>
-        </React.Fragment>
+        </>
       ) : (
         <ins>{price}</ins>
       )}

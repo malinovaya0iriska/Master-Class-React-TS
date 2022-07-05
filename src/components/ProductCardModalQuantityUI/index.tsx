@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
-import { ProductCardModalQuantityUIProps } from './interface';
+import { ProductCardModalQuantityUIProps } from './types';
 
 export const ProductCardModalQuantityUI: React.FC<ProductCardModalQuantityUIProps> = ({
   quantity,

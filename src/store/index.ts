@@ -21,5 +21,3 @@ export const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
-
-// store.dispatch({ type: ProductDetailsAction.FETCH_PRODUCTS_DETAILS });
