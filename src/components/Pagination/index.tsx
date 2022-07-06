@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import { PaginationProps, PaginationState } from './types';
 
 import { ONE } from 'constants/index';
+import { ThemeContext } from 'context/ThemeContext';
 import { ReturnComponentType } from 'types';
 import { Button } from 'ui-components';
 import './style.css';
@@ -81,19 +82,23 @@ export class Pagination extends React.Component<PaginationProps, PaginationState
 
   render(): ReturnComponentType {
     return (
-      <div className="pagination-container">
-        <i
-          onClick={this.handlePreviousClick}
-          className="fa fa-caret-left page-caret"
-          aria-hidden="true"
-        />
-        <div className="pages-container">{this.renderPageButtons()}</div>
-        <i
-          onClick={this.handleNextClick}
-          className="fa fa-caret-right page-caret"
-          aria-hidden="true"
-        />
-      </div>
+      <ThemeContext.Consumer>
+        {theme => (
+          <div className={`pagination-container ${theme}`}>
+            <i
+              onClick={this.handlePreviousClick}
+              className="fa fa-caret-left page-caret"
+              aria-hidden="true"
+            />
+            <div className="pages-container">{this.renderPageButtons()}</div>
+            <i
+              onClick={this.handleNextClick}
+              className="fa fa-caret-right page-caret"
+              aria-hidden="true"
+            />
+          </div>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }

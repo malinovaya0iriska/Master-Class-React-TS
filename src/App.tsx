@@ -9,12 +9,13 @@ import { ReturnComponentType } from './types';
 import { HeaderNavigation } from 'components';
 import { ROUTE } from 'constants/routes';
 import { AllProducts, Checkout, HomePage } from 'containers';
+import { ThemeContextProvider } from 'context/ThemeContext';
 import { store } from 'store';
 
 export const App: FC = (): ReturnComponentType => (
   <Provider store={store}>
     <BrowserRouter>
-      <div className="app-container">
+      <ThemeContextProvider>
         <HeaderNavigation />
         <Routes>
           <Route element={<HomePage />} path={ROUTE.HOME} />
@@ -22,7 +23,7 @@ export const App: FC = (): ReturnComponentType => (
           <Route element={<AllProducts />} path={ROUTE.ALL_PRODUCTS} />
           <Route element={<Checkout />} path={ROUTE.CHECKOUT} />
         </Routes>
-      </div>
+      </ThemeContextProvider>
     </BrowserRouter>
   </Provider>
 );

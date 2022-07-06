@@ -151,7 +151,7 @@ export class CustomerInformation extends React.Component<
     const { showThankyouModal } = this.state;
     return (
       <div className="customer-info-container">
-        <div className="heading">Billing Information</div>
+        <div className="heading text">Billing Information</div>
         {this.renderInputFields()}
         <Button
           style={{ width: CUSTOMER_INFORMATION_FIELD_WIDTH }}
