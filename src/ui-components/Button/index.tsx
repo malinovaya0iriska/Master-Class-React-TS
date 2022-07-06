@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ButtonProps, DefaultButtonPropsType } from './interface';
+import { ButtonProps, DefaultButtonPropsType } from './types';
 
 import { ReturnComponentType } from 'types';
 

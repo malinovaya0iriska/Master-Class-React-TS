@@ -3,7 +3,7 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 
-import { ModalProps } from './interface';
+import { ModalProps } from './types';
 
 import { ReturnComponentType } from 'types';
 

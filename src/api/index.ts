@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable class-methods-use-this */
 import axios from 'axios';
 
 import { EMPTY_STRING } from 'constants/index';
-import { ProductFilters } from 'store/reducers';
+import { CustomerInformationFieldsList } from 'constants/user';
+import { ProductFilters, ProductPurchase } from 'store/reducers';
 
 export interface GetProducsOptions {
   page?: number;
@@ -14,8 +16,12 @@ export interface ProductFiltersAPIResponse {
   productFilters: ProductFilters;
 }
 
+export interface Order {
+  cart: ProductPurchase[];
+  user: CustomerInformationFieldsList;
+}
+
 class ShopAPI {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   getProducts = (options: GetProducsOptions) => {
     const { page, size, category } = options;
 
@@ -25,12 +31,19 @@ class ShopAPI {
       category ? category.join('&category=') : EMPTY_STRING
     }`;
     return axios.get(
-      `http://localhost:1234/products?${pageQueryParam}${sizeQueryParam}${categoryQueryParam}`,
+      `http://localhost:1234/product/all?${pageQueryParam}${sizeQueryParam}${categoryQueryParam}`,
     );
   };
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  getProductFilters = () => axios.get('http://localhost:1234/productFilters');
+  getProductFilters = () => axios.get('http://localhost:1234/product/filters');
+
+  postOrder = (order: Order) => {
+    const body = {
+      order,
+    };
+
+    return axios.post('http://localhost:1234/order', body);
+  };
 }
 
 export default ShopAPI;

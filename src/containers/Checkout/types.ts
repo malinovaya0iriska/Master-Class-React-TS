@@ -8,7 +8,13 @@ export interface CheckoutStateProps {
 
 export interface CheckoutOwnProps {}
 
-export type CheckoutPageProps = CheckoutStateProps & CheckoutOwnProps;
+export interface CheckoutDispatchProps {
+  cleanCart(): void;
+}
+
+export type CheckoutPageProps = CheckoutStateProps &
+  CheckoutOwnProps &
+  CheckoutDispatchProps;
 
 export interface CartDetailsType {
   cartItems: ReactNode[];

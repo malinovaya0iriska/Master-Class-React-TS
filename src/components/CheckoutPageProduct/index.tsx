@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CheckoutPageProductProps } from './interface';
+import { CheckoutPageProductProps } from './types';
 
 import { SIZE } from 'constants/index';
 import { upperCaseFirstLetter } from 'utils';

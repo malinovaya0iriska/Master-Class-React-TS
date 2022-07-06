@@ -1,6 +1,6 @@
 import { Component, ReactNode } from 'react';
 
-import { connect, MapStateToProps } from 'react-redux';
+import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import {
@@ -8,10 +8,12 @@ import {
   CheckoutOwnProps,
   CheckoutPageProps,
   CheckoutStateProps,
+  CheckoutDispatchProps,
 } from './types';
 
-import { CheckoutPageProduct } from 'components';
+import { CheckoutPageProduct, CustomerInformation } from 'components';
 import { ROUTE } from 'constants/routes';
+import { UserAction } from 'store/actions';
 import { AppStateType } from 'store/reducers';
 import { ReturnComponentType } from 'types';
 import { getSubtotalPrice } from 'utils/product';
@@ -46,7 +48,7 @@ class Checkout extends Component<CheckoutPageProps> {
   };
 
   render(): ReturnComponentType {
-    const { cart } = this.props;
+    const { cart, cleanCart } = this.props;
     const { cartItems, totalPrice } = this.getCartDetails();
 
     return cart.length ? (
@@ -66,7 +68,9 @@ class Checkout extends Component<CheckoutPageProps> {
             <div className="total-price">${totalPrice}</div>
           </div>
         </div>
-        <div className="customer-info" />
+        <div className="customer-info">
+          <CustomerInformation cart={cart} cleanCart={cleanCart} />
+        </div>
       </div>
     ) : (
       <Navigate to={ROUTE.HOME} />
@@ -85,4 +89,14 @@ const mapStateToProps: MapStateToProps<
   };
 };
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispathToProps: MapDispatchToPropsFunction<
+  CheckoutDispatchProps,
+  CheckoutOwnProps
+> = dispatch => {
+  const { cleanCart } = new UserAction();
+  return {
+    cleanCart: () => dispatch(cleanCart()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispathToProps)(Checkout);
