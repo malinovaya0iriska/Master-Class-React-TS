@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, lazy, Suspense } from 'react';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -8,9 +8,13 @@ import { ReturnComponentType } from './types';
 
 import { HeaderNavigation } from 'components';
 import { ROUTE } from 'constants/routes';
-import { AllProducts, Checkout, HomePage } from 'containers';
+import { ErrorPage } from 'containers';
 import { ThemeContextProvider } from 'context/ThemeContext';
 import { store } from 'store';
+
+const HomePage = lazy(() => import('./containers/HomePage/index'));
+const AllProducts = lazy(() => import('./containers/AllProducts/index'));
+const Checkout = lazy(() => import('./containers/Checkout/index'));
 
 export const App: FC = (): ReturnComponentType => (
   <Provider store={store}>
@@ -18,10 +22,32 @@ export const App: FC = (): ReturnComponentType => (
       <ThemeContextProvider>
         <HeaderNavigation />
         <Routes>
-          <Route element={<HomePage />} path={ROUTE.HOME} />
-          {/* @ts-ignore */}
-          <Route element={<AllProducts />} path={ROUTE.ALL_PRODUCTS} />
-          <Route element={<Checkout />} path={ROUTE.CHECKOUT} />
+          <Route
+            path={ROUTE.HOME}
+            element={
+              <Suspense fallback={null}>
+                <HomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path={ROUTE.ALL_PRODUCTS}
+            element={
+              <Suspense fallback={null}>
+                {/* @ts-ignore */}
+                <AllProducts />
+              </Suspense>
+            }
+          />
+          <Route
+            path={ROUTE.CHECKOUT}
+            element={
+              <Suspense fallback={null}>
+                <Checkout />
+              </Suspense>
+            }
+          />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </ThemeContextProvider>
     </BrowserRouter>

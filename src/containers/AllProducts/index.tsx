@@ -73,7 +73,7 @@ class AllProducts extends Component<AllProductsPageProps> {
 
 const mapStateToProps: MapStateToProps<
   AllProductsStateProps,
-  AllProductsStateProps,
+  {},
   AppStateType
 > = state => {
   const { shopProducts, productFilters } = state.shop;
