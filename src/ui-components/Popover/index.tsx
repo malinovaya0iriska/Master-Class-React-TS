@@ -4,10 +4,11 @@ import React, { ReactNode } from 'react';
 
 import ReactDOM from 'react-dom';
 
+import { ReturnComponentType } from '../../types';
+
 import { PopoverProps, PopoverState } from './types';
 
 import './style.css';
-import { ReturnComponentType } from 'types';
 
 export class Popover extends React.Component<PopoverProps, PopoverState> {
   root: HTMLDivElement;

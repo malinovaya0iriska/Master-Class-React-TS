@@ -1,4 +1,4 @@
-import { GetProducsOptions } from 'api';
+import { GetProductsOptions } from 'api';
 import { FetchShopProductsAction } from 'store/actions';
 import { ProductFilters, ProductPurchase, ShopProducts } from 'store/reducers';
 
@@ -10,7 +10,7 @@ export interface AllProductsStateProps {
 }
 
 export interface AllProductsDispatchToProps {
-  fetchShopProducts(options: GetProducsOptions): FetchShopProductsAction;
+  fetchShopProducts(options: GetProductsOptions): FetchShopProductsAction;
   fetchShopProductsAndFilters(): any;
   updateUserFilters(filters: ProductFilters): any;
   updateUserShopProductsPage(page: number): any;

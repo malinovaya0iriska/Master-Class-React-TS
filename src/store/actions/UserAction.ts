@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import { ProductPurchase } from 'store/reducers';
-import { ProductFilters } from 'store/reducers/shopReducer';
+import { ProductFilters } from '../reducers/shopReducer';
+import { ProductPurchase } from '../reducers/userReducer';
 
 export type UserReducerAction =
   | UpdateUserFiltersAction

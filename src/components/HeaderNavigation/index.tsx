@@ -2,9 +2,9 @@ import { FC } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { ROUTE } from 'constants/routes';
+import { ROUTE } from '../../constants/routes';
 import './style.css';
-import { ShoppingCart } from 'containers';
+import { ShoppingCart } from '../../containers';
 
 export const HeaderNavigation: FC = () => (
   <div className="header-nav-container">

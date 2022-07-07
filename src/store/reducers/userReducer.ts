@@ -1,11 +1,9 @@
 import update from 'immutability-helper';
 import { Reducer } from 'redux';
 
-import { UserAction, UserReducerAction } from 'store/actions';
-import {
-  ProductFilters,
-  ProductVariantCompleteDetails,
-} from 'store/reducers/shopReducer';
+import UserAction, { UserReducerAction } from '../actions/UserAction';
+
+import { ProductFilters, ProductVariantCompleteDetails } from './shopReducer';
 
 export interface ProductPurchase extends ProductVariantCompleteDetails {
   quantity: number;
@@ -18,7 +16,7 @@ export interface User {
   cart: ProductPurchase[];
 }
 
-const userInitialState: User = {
+export const userInitialState: User = {
   shopProductsPage: 1,
   shopProductsPageSize: 2,
   filters: {

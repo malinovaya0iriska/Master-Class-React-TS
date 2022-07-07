@@ -4,6 +4,14 @@ import React, { ReactNode } from 'react';
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { ShoppingCartProduct } from '../../components';
+import { ONE } from '../../constants/index';
+import { ROUTE } from '../../constants/routes';
+import { UserAction } from '../../store/actions';
+import { AppStateType, ProductPurchase } from '../../store/reducers';
+import { ReturnComponentType } from '../../types';
+import { Popover, Button } from '../../ui-components';
+
 import {
   ShoppingCartDispatchProps,
   ShoppingCartOwnProps,
@@ -11,14 +19,6 @@ import {
   ShoppingCartState,
   ShoppingCartStateProps,
 } from './types';
-
-import { ShoppingCartProduct } from 'components';
-import { ONE } from 'constants/index';
-import { ROUTE } from 'constants/routes';
-import { UserAction } from 'store/actions';
-import { AppStateType, ProductPurchase } from 'store/reducers';
-import { ReturnComponentType } from 'types';
-import { Popover, Button } from 'ui-components';
 import './style.css';
 
 class ShoppingCart extends React.Component<ShoppingCartProps, ShoppingCartState> {

@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import { GetProducsOptions } from 'api';
-import { Product, ProductFilters, ShopProducts } from 'store/reducers';
+import { GetProductsOptions } from '../../api';
+import { Product, ProductFilters, ShopProducts } from '../reducers';
 
 export type ShopReducerAction =
   | SetShopProductsAction
@@ -17,7 +17,7 @@ export interface SetShopProductsAction {
 
 export interface FetchShopProductsAction {
   type: typeof ShopAction.FETCH_SHOP_PRODUCTS;
-  options: GetProducsOptions;
+  options: GetProductsOptions;
 }
 
 export interface SetBestSellerProductsAction {
@@ -52,7 +52,7 @@ class ShopAction {
 
   static readonly SET_BEST_SELLER_PRODUCTS = 'SET_BEST_SELLER_PRODUCTS';
 
-  fetchShopProducts = (options: GetProducsOptions): FetchShopProductsAction => ({
+  fetchShopProducts = (options: GetProductsOptions): FetchShopProductsAction => ({
     type: ShopAction.FETCH_SHOP_PRODUCTS,
     options,
   });

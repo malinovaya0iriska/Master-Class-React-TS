@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ProductCardModalPriceUIProps } from './types';
+import { getDiscountedPrice } from '../../utils/product';
 
-import { getDiscountedPrice } from 'utils/product';
+import { ProductCardModalPriceUIProps } from './types';
 
 export const ProductCardModalPriceUI: React.FC<ProductCardModalPriceUIProps> = ({
   selectedVariant,

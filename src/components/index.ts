@@ -11,3 +11,4 @@ export { Pagination } from './Pagination';
 export { ShoppingCartProduct } from './ShoppingCartProduct';
 export { CheckoutPageProduct } from './CheckoutPageProduct';
 export { CustomerInformation } from './CustomerInformation';
+export { default as HandleAllErrors } from './HandleAllErrors';

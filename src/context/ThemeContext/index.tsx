@@ -2,7 +2,7 @@ import { Component, createContext, ReactNode } from 'react';
 
 import ReactDOM from 'react-dom';
 
-import { ReturnComponentType } from 'types';
+import { ReturnComponentType } from '../../types';
 
 import './style.css';
 
@@ -11,6 +11,7 @@ export type ThemeContextValue = 'light' | 'dark';
 export const ThemeContext = createContext<ThemeContextValue>('light');
 export interface ThemeContextProviderState {
   theme: ThemeContextValue;
+  showThemeButton: boolean;
 }
 
 export class ThemeContextProvider extends Component<
@@ -27,6 +28,7 @@ export class ThemeContextProvider extends Component<
     super(props);
     this.state = {
       theme: 'light',
+      showThemeButton: false,
     };
 
     this.root = document.querySelector('#root') as HTMLDivElement;
@@ -36,6 +38,9 @@ export class ThemeContextProvider extends Component<
 
   componentDidMount(): void {
     this.root.appendChild(this.el);
+    this.setState({
+      showThemeButton: true,
+    });
   }
 
   componentWillUnmount(): void {
@@ -50,7 +55,7 @@ export class ThemeContextProvider extends Component<
   };
 
   render(): ReturnComponentType {
-    const { theme } = this.state;
+    const { theme, showThemeButton } = this.state;
     const { children } = this.props;
 
     const isLightTheme = theme === 'light';
@@ -58,14 +63,16 @@ export class ThemeContextProvider extends Component<
 
     const iconClassName = isLightTheme ? 'fa-sun-o' : 'fa-moon-o';
 
-    const themeButton = ReactDOM.createPortal(
-      <i
-        onClick={this.handleChangeTheme}
-        className={`fa ${iconClassName} theme-context-button ${theme}`}
-        aria-hidden="true"
-      />,
-      this.el,
-    );
+    const themeButton = showThemeButton
+      ? ReactDOM.createPortal(
+          <i
+            onClick={this.handleChangeTheme}
+            className={`fa ${iconClassName} theme-context-button ${theme}`}
+            aria-hidden="true"
+          />,
+          this.el,
+        )
+      : null;
 
     return (
       <ThemeContext.Provider value={theme}>

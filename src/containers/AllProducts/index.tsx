@@ -6,15 +6,19 @@ import { Component, ReactNode } from 'react';
 
 import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 
-import { AllProductsSideBar, ProductCard, Pagination } from 'components';
+import { AllProductsSideBar, ProductCard, Pagination } from '../../components';
+import ShopAction from '../../store/actions/ShopAction';
+import UserAction from '../../store/actions/UserAction';
+import { AppStateType } from '../../store/reducers/rootReducer';
+import { Product } from '../../store/reducers/shopReducer';
+import { ProductPurchase } from '../../store/reducers/userReducer';
+import { ReturnComponentType } from '../../types';
+
 import {
   AllProductsPageProps,
   AllProductsStateProps,
   AllProductsDispatchToProps,
-} from 'containers/AllProducts/types';
-import { UserAction, ShopAction } from 'store/actions';
-import { AppStateType } from 'store/reducers';
-import { ReturnComponentType } from 'types';
+} from './types';
 import './style.css';
 
 class AllProducts extends Component<AllProductsPageProps> {
@@ -28,7 +32,7 @@ class AllProducts extends Component<AllProductsPageProps> {
 
   renderAllProductsList = (): ReactNode => {
     const { shopProducts, addToCart } = this.props;
-    return shopProducts.products.map(product => (
+    return shopProducts.products.map((product: Product) => (
       <div key={product.id} className="product-item-container">
         <ProductCard product={product} addToCart={addToCart} />
       </div>
@@ -73,7 +77,7 @@ class AllProducts extends Component<AllProductsPageProps> {
 
 const mapStateToProps: MapStateToProps<
   AllProductsStateProps,
-  {},
+  AllProductsStateProps,
   AppStateType
 > = state => {
   const { shopProducts, productFilters } = state.shop;
@@ -96,9 +100,9 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
     fetchShopProducts: options => dispatch(fetchShopProducts(options)),
     fetchShopProductsAndFilters: () => dispatch(fetchShopProductsAndFilters()),
     updateUserFilters: filters => dispatch(updateUserFilters(filters)),
-    updateUserShopProductsPage: shopProductsPage =>
+    updateUserShopProductsPage: (shopProductsPage: number) =>
       dispatch(updateUserShopProductsPage(shopProductsPage)),
-    addToCart: productPurchase => dispatch(addToCart(productPurchase)),
+    addToCart: (productPurchase: ProductPurchase) => dispatch(addToCart(productPurchase)),
   };
 };
 

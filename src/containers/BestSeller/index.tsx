@@ -3,13 +3,13 @@ import { Component, ReactNode } from 'react';
 
 import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 
-import { BestSellerProps, BestSellerStateProps, BestSellerDispatchProps } from './types';
-
-import { ProductCard } from 'components';
-import { ShopAction, UserAction } from 'store/actions';
-import { AppStateType } from 'store/reducers';
+import { ProductCard } from '../../components';
+import { ShopAction, UserAction } from '../../store/actions';
+import { AppStateType, Product, ProductPurchase } from '../../store/reducers';
 import './style.css';
-import { ReturnComponentType } from 'types';
+import { ReturnComponentType } from '../../types';
+
+import { BestSellerProps, BestSellerStateProps, BestSellerDispatchProps } from './types';
 
 class BestSeller extends Component<BestSellerProps> {
   componentDidMount(): void {
@@ -22,7 +22,7 @@ class BestSeller extends Component<BestSellerProps> {
   renderBestSellerProducts = (): ReactNode => {
     const { bestSellerProducts, addToCart } = this.props;
 
-    return bestSellerProducts.map(product => (
+    return bestSellerProducts.map((product: Product) => (
       <ProductCard key={product.id} product={product} addToCart={addToCart} />
     ));
   };
@@ -54,7 +54,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
 
   return {
     fetchAllBestSellerProducts: () => dispatch(fetchAllBestSellerProducts()),
-    addToCart: productPurchase => dispatch(addToCart(productPurchase)),
+    addToCart: (productPurchase: ProductPurchase) => dispatch(addToCart(productPurchase)),
   };
 };
 

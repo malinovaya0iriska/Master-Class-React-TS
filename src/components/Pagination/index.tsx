@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 
-import { PaginationProps, PaginationState } from './types';
+import { ONE } from '../../constants/index';
+import { ThemeContext } from '../../context/ThemeContext';
+import { ReturnComponentType } from '../../types';
+import { Button } from '../../ui-components';
 
-import { ONE } from 'constants/index';
-import { ThemeContext } from 'context/ThemeContext';
-import { ReturnComponentType } from 'types';
-import { Button } from 'ui-components';
+import { PaginationProps, PaginationState } from './types';
 import './style.css';
 
 export class Pagination extends React.Component<PaginationProps, PaginationState> {

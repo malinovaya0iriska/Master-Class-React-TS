@@ -1,4 +1,4 @@
-import { ProductPurchase } from 'store/reducers';
+import { ProductPurchase } from '../../store/reducers';
 
 export interface ShoppingCartStateProps {
   cart: ProductPurchase[];

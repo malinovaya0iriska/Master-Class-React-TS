@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ShoppingCartProductProps } from './types';
+import { upperCaseFirstLetter } from '../../utils';
+import { getSubtotalPrice } from '../../utils/product';
 
-import { upperCaseFirstLetter } from 'utils';
-import { getSubtotalPrice } from 'utils/product';
+import { ShoppingCartProductProps } from './types';
 import './style.css';
 
 export const ShoppingCartProduct: React.FC<ShoppingCartProductProps> = ({

@@ -1,5 +1,5 @@
-import { ProductVariantCompleteDetails } from 'store/reducers';
-import { VariantsOptionsAvailable } from 'utils/product';
+import { ProductVariantCompleteDetails } from '../../store/reducers/shopReducer';
+import { VariantsOptionsAvailable } from '../../utils/product';
 
 export interface ProductCardModalVariantOptionsProps {
   variants: ProductVariantCompleteDetails[];

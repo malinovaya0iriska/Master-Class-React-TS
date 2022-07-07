@@ -1,4 +1,4 @@
-import { Product, ProductPurchase } from 'store/reducers';
+import { Product, ProductPurchase } from '../../store/reducers';
 
 export interface ProductCardProps {
   product: Product;

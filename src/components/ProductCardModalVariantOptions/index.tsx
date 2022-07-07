@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 
-import { ProductCardModalVariantOptionsProps } from './types';
+import { Button } from '../../ui-components';
+import { getBackgroundColorStyleForButton } from '../../utils/product';
 
-import { Button } from 'ui-components';
-import { getBackgroundColorStyleForButton } from 'utils/product';
+import { ProductCardModalVariantOptionsProps } from './types';
 
 export const ProductCardModalVariantOptions: React.FC<
   ProductCardModalVariantOptionsProps
@@ -57,7 +57,7 @@ export const ProductCardModalVariantOptions: React.FC<
     processData.push(size);
   });
 
-  variantsOptionsAvailable[selectedVariant.size].forEach(color => {
+  variantsOptionsAvailable[selectedVariant.size].forEach((color: string) => {
     const backgroundStyle: React.CSSProperties = getBackgroundColorStyleForButton(color);
 
     colorsUI.push(

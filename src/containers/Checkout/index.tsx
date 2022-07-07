@@ -3,6 +3,13 @@ import { Component, ReactNode } from 'react';
 import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
+import { CheckoutPageProduct, CustomerInformation } from '../../components';
+import { ROUTE } from '../../constants/routes';
+import { UserAction } from '../../store/actions';
+import { AppStateType } from '../../store/reducers';
+import { ReturnComponentType } from '../../types';
+import { getSubtotalPrice } from '../../utils/product';
+
 import {
   CartDetailsType,
   CheckoutOwnProps,
@@ -10,13 +17,6 @@ import {
   CheckoutStateProps,
   CheckoutDispatchProps,
 } from './types';
-
-import { CheckoutPageProduct, CustomerInformation } from 'components';
-import { ROUTE } from 'constants/routes';
-import { UserAction } from 'store/actions';
-import { AppStateType } from 'store/reducers';
-import { ReturnComponentType } from 'types';
-import { getSubtotalPrice } from 'utils/product';
 import './style.css';
 
 class Checkout extends Component<CheckoutPageProps> {

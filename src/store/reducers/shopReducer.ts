@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 import { Reducer } from 'redux';
 
-import { ShopAction, ShopReducerAction } from 'store/actions';
+import { ShopAction, ShopReducerAction } from '../actions';
 
 export type ProductVariantCompleteDetails = Omit<ProductVariant, 'id'> &
   Omit<Product, 'id' | 'variants'> & {
@@ -46,7 +46,7 @@ export interface Shop {
   productFilters: ProductFilters;
 }
 
-const shopInitialState: Shop = {
+export const shopInitialState: Shop = {
   shopProducts: {
     products: [],
     productsCount: 0,

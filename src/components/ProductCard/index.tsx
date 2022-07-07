@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { ProductCardProps, ProductCardState } from './types';
+import { ThemeContext } from '../../context/ThemeContext';
+import { ProductPurchase } from '../../store/reducers';
+import { ReturnComponentType } from '../../types';
+import { getProductVariantDetails } from '../../utils/product';
+import { ProductCardModal } from '../ProductCardModal';
 
-import { ProductCardModal } from 'components';
-import { ThemeContext } from 'context/ThemeContext';
-import { ProductPurchase } from 'store/reducers';
-import { ReturnComponentType } from 'types';
-import { getProductVariantDetails } from 'utils/product';
+import { ProductCardProps, ProductCardState } from './types';
 
 import './style.css';
 

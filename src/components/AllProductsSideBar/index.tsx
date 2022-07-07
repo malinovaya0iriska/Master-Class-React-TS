@@ -2,11 +2,11 @@ import React, { ReactNode } from 'react';
 
 import update from 'immutability-helper';
 
-import { ProductFiltersProps } from './types';
+import { ProductFilters } from '../../store/reducers';
+import { Checkbox } from '../../ui-components';
+import { upperCaseFirstLetter } from '../../utils/index';
 
-import { ProductFilters } from 'store/reducers';
-import { Checkbox } from 'ui-components';
-import { upperCaseFirstLetter } from 'utils';
+import { ProductFiltersProps } from './types';
 import './style.css';
 
 export const AllProductsSideBar: React.FC<ProductFiltersProps> = ({
@@ -26,7 +26,7 @@ export const AllProductsSideBar: React.FC<ProductFiltersProps> = ({
         newUserFilters = update(userFilters, {
           [filterCategory]: {
             $set: userFilters[filterCategory as keyof ProductFilters].filter(
-              val => val !== filterValue,
+              (val: string) => val !== filterValue,
             ),
           },
         });
@@ -36,13 +36,13 @@ export const AllProductsSideBar: React.FC<ProductFiltersProps> = ({
     };
 
   const renderFilters = (): ReactNode =>
-    Object.keys(productFilters).map(filterCategory => {
+    Object.keys(productFilters).map((filterCategory: string) => {
       const filterValues = productFilters[filterCategory as keyof ProductFilters];
 
       return (
         <div key={filterCategory} className="product-filter">
           <p>{upperCaseFirstLetter(filterCategory)}</p>
-          {filterValues.map(filterValue => (
+          {filterValues.map((filterValue: string) => (
             <div key={filterValue} className="filter-checkbox">
               <Checkbox onChange={handleFilterChange(filterCategory, filterValue)}>
                 {filterValue}

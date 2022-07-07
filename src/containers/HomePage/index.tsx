@@ -1,12 +1,11 @@
 import { FC } from 'react';
 
 import './style.css';
-import { HomePageProps } from './types';
 
-import { Partners, ShopQuality } from 'components';
-import { BestSeller } from 'containers';
+import { Partners, ShopQuality } from '../../components';
+import BestSeller from '../BestSeller';
 
-const HomePage: FC<HomePageProps> = () => (
+const HomePage: FC = () => (
   <div className="homepage-container">
     <div className="cover-image" />
     <ShopQuality />

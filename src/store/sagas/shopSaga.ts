@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 
-import ShopAPI, { GetProducsOptions, ProductFiltersAPIResponse } from 'api';
-import { ShopAction, FetchShopProductsAction } from 'store/actions';
-import { AppStateType, ShopProducts, User } from 'store/reducers';
+import ShopAPI, { GetProductsOptions, ProductFiltersAPIResponse } from '../../api';
+import ShopAction, { FetchShopProductsAction } from '../actions/ShopAction';
+import { AppStateType, ShopProducts, User } from '../reducers';
 
 function* workerFetchShopProductsSaga(action: FetchShopProductsAction) {
   const shopAPI = new ShopAPI();
@@ -45,7 +45,7 @@ function* workerFetchShopProductsAndFilterSaga(_action: FetchShopProductsAction)
   try {
     const user: User = yield select((state: AppStateType) => state.user);
 
-    const options: Omit<GetProducsOptions, 'category'> = {
+    const options: Omit<GetProductsOptions, 'category'> = {
       page: user.shopProductsPage,
       size: user.shopProductsPageSize,
     };

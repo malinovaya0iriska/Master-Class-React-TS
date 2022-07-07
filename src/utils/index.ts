@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import { ProductFilters } from 'store/reducers';
+import { ProductFilters } from '../store/reducers/shopReducer';
 
 export const upperCaseFirstLetter = (str: string): string =>
   str[0].toUpperCase() + str.substr(1).toLowerCase();

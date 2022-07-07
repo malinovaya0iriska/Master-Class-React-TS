@@ -1,5 +1,7 @@
-import { ProductVariantCompleteDetails, ProductPurchase } from 'store/reducers';
-import { VariantsOptionsAvailable } from 'utils/product';
+import { ProductVariantCompleteDetails } from '../../store/reducers/shopReducer';
+import { VariantsOptionsAvailable } from '../../utils/product';
+
+import { ProductPurchase } from 'store/reducers/userReducer';
 
 export interface ProductCardModalProps {
   show: boolean;

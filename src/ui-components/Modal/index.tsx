@@ -3,9 +3,9 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 
-import { ModalProps } from './types';
+import { ReturnComponentType } from '../../types';
 
-import { ReturnComponentType } from 'types';
+import { ModalProps } from './types';
 
 import './style.css';
 

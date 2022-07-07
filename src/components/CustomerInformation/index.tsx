@@ -3,14 +3,8 @@ import React, { ReactNode } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import {
-  CustomerInformationFieldRefs,
-  CustomerInformationProps,
-  CustomerInformationState,
-} from './types';
-
-import ShopAPI from 'api';
-import { ROUTE } from 'constants/routes';
+import ShopAPI from '../../api';
+import { ROUTE } from '../../constants/routes';
 import {
   CustomerInformationField,
   CustomerInformationFieldsList,
@@ -18,10 +12,16 @@ import {
   CUSTOMER_INFORMATION_FIELD_ERROR,
   CUSTOMER_INFORMATION_FIELD_INITIAL_STATE,
   CUSTOMER_INFORMATION_FIELD_WIDTH,
-} from 'constants/user';
-import { ReturnComponentType } from 'types';
-import { Button, Input, Modal } from 'ui-components';
-import { omit } from 'utils';
+} from '../../constants/user';
+import { ReturnComponentType } from '../../types';
+import { Button, Input, Modal } from '../../ui-components';
+import { omit } from '../../utils';
+
+import {
+  CustomerInformationFieldRefs,
+  CustomerInformationProps,
+  CustomerInformationState,
+} from './types';
 import './style.css';
 
 export class CustomerInformation extends React.Component<

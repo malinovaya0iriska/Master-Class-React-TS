@@ -2,11 +2,11 @@
 /* eslint-disable class-methods-use-this */
 import axios from 'axios';
 
-import { EMPTY_STRING } from 'constants/index';
-import { CustomerInformationFieldsList } from 'constants/user';
-import { ProductFilters, ProductPurchase } from 'store/reducers';
+import { EMPTY_STRING } from '../constants/index';
+import { CustomerInformationFieldsList } from '../constants/user';
+import { ProductFilters, ProductPurchase } from '../store/reducers';
 
-export interface GetProducsOptions {
+export interface GetProductsOptions {
   page?: number;
   size?: number;
   category?: string[];
@@ -22,7 +22,7 @@ export interface Order {
 }
 
 class ShopAPI {
-  getProducts = (options: GetProducsOptions) => {
+  getProducts = (options: GetProductsOptions) => {
     const { page, size, category } = options;
 
     const pageQueryParam = `page=${page || EMPTY_STRING}`;

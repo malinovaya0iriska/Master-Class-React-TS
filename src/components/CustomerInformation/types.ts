@@ -1,7 +1,10 @@
 import { RefObject } from 'react';
 
-import { CustomerInformationField, CustomerInformationFieldsList } from 'constants/user';
-import { ProductPurchase } from 'store/reducers';
+import {
+  CustomerInformationField,
+  CustomerInformationFieldsList,
+} from '../../constants/user';
+import { ProductPurchase } from '../../store/reducers';
 
 export interface CustomerInformationProps {
   cart: ProductPurchase[];

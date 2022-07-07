@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 
-import ShopAPI, { GetProducsOptions } from 'api';
-import { ONE } from 'constants/index';
+import ShopAPI, { GetProductsOptions } from '../../api';
+import { ONE } from '../../constants/index';
+import { convertFiltersToCategories } from '../../utils';
 import {
   UserAction,
   ShopAction,
   UpdateUserFiltersAction,
   UpdateUserShopProductPageAction,
-} from 'store/actions';
-import { AppStateType, ShopProducts, User } from 'store/reducers';
-import { convertFiltersToCategories } from 'utils';
+} from '../actions';
+import { AppStateType, ShopProducts, User } from '../reducers';
 
 function* workerUpdateUserFiltersSaga(action: UpdateUserFiltersAction) {
   const shopAPI = new ShopAPI();
@@ -19,7 +19,7 @@ function* workerUpdateUserFiltersSaga(action: UpdateUserFiltersAction) {
 
   const user: User = yield select((state: AppStateType) => state.user);
 
-  const options: GetProducsOptions = {
+  const options: GetProductsOptions = {
     page: ONE,
     size: user.shopProductsPageSize,
     category: convertFiltersToCategories(action.filters),
@@ -43,7 +43,7 @@ function* workerUpdateUserShopProductsSaga(action: UpdateUserShopProductPageActi
 
   const user: User = yield select((state: AppStateType) => state.user);
 
-  const options: GetProducsOptions = {
+  const options: GetProductsOptions = {
     page: action.shopProductsPage,
     size: user.shopProductsPageSize,
     category: convertFiltersToCategories(user.filters),

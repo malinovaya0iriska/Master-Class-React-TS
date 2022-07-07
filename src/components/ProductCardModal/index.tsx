@@ -2,15 +2,14 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from 'react';
 
+import { ReturnComponentType } from '../../types';
+import { Button, Modal } from '../../ui-components';
+import { ProductCardModalPriceUI } from '../ProductCardModalPriceUI';
+import { ProductCardModalQuantityUI } from '../ProductCardModalQuantityUI';
+import { ProductCardModalVariantOptions } from '../ProductCardModalVariantOptions';
+
 import { ProductCardModalProps, ProductCardModalState } from './types';
 
-import {
-  ProductCardModalPriceUI,
-  ProductCardModalQuantityUI,
-  ProductCardModalVariantOptions,
-} from 'components';
-import { ReturnComponentType } from 'types';
-import { Button, Modal } from 'ui-components';
 import './style.css';
 
 export class ProductCardModal extends React.Component<

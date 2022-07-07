@@ -2,10 +2,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
+import { ReturnComponentType } from '../../types';
+
 import { CheckboxProps, CheckboxState } from './types';
 
 import './style.css';
-import { ReturnComponentType } from 'types';
 
 export class Checkbox extends React.Component<CheckboxProps, CheckboxState> {
   constructor(props: CheckboxProps) {

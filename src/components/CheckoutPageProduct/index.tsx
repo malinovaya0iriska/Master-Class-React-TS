@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { CheckoutPageProductProps } from './types';
+import { SIZE } from '../../constants/index';
+import { upperCaseFirstLetter } from '../../utils';
+import { getBackgroundColorStyleForButton, getSubtotalPrice } from '../../utils/product';
 
-import { SIZE } from 'constants/index';
-import { upperCaseFirstLetter } from 'utils';
-import { getBackgroundColorStyleForButton, getSubtotalPrice } from 'utils/product';
+import { CheckoutPageProductProps } from './types';
 import './style.css';
 
 export const CheckoutPageProduct: React.FC<CheckoutPageProductProps> = ({ product }) => {

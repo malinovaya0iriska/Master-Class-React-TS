@@ -1,4 +1,4 @@
-import { ProductFilters } from 'store/reducers';
+import { ProductFilters } from '../../store/reducers';
 
 export interface ProductFiltersProps {
   productFilters: ProductFilters;

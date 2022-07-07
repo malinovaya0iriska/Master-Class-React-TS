@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { shopReducer } from 'store/reducers/shopReducer';
-import { userReducer } from 'store/reducers/userReducer';
+import { shopReducer } from './shopReducer';
+import { userReducer } from './userReducer';
 
 export const rootReducer = combineReducers({
   shop: shopReducer,

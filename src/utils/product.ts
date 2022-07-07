@@ -1,14 +1,14 @@
 import { CSSProperties } from 'react';
 
-import { omit } from './index';
-
-import { ONE } from 'constants/index';
+import { ONE } from '../constants/index';
 import {
   Product,
   ProductPurchase,
   ProductVariant,
   ProductVariantCompleteDetails,
-} from 'store/reducers';
+} from '../store/reducers';
+
+import { omit } from './index';
 
 export type InitialVariant = ProductVariantCompleteDetails | null;
 
