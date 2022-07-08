@@ -3,12 +3,20 @@ import { FC } from 'react';
 import './App.css';
 import { ReturnComponentType } from './types';
 
-import { HomePage } from 'components/HomePage';
+import { WithUseDebug } from 'components/WithUseDebug';
 
-export const App: FC = (): ReturnComponentType => (
-  <div className="App">
-    <header className="App-header">
-      <HomePage />
-    </header>
-  </div>
-);
+export const App: FC = (): ReturnComponentType => {
+  console.log('APP');
+
+  return (
+    <div className="App">
+      {/* <WithUseEffectVariants /> */}
+      {/* <LayoutEffectVSUseEffect /> */}
+      {/* <UseCallbackNUseMemo /> */}
+      {/* <WithUseRef /> */}
+      {/* <WithUseImperativeHandle /> */}
+      {/* <WithUseReducer /> */}
+      <WithUseDebug />
+    </div>
+  );
+};
