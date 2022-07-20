@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
-import React, { ReactNode } from 'react';
+import React, { FC, ReactNode, useMemo, useRef, useState } from 'react';
 
+import update from 'immutability-helper';
 import { Link } from 'react-router-dom';
 
 import ShopAPI from '../../api';
@@ -13,67 +14,48 @@ import {
   CUSTOMER_INFORMATION_FIELD_INITIAL_STATE,
   CUSTOMER_INFORMATION_FIELD_WIDTH,
 } from '../../constants/user';
-import { ReturnComponentType } from '../../types';
 import { Button, Input, Modal } from '../../ui-components';
-import { omit } from '../../utils';
 
-import {
-  CustomerInformationFieldRefs,
-  CustomerInformationProps,
-  CustomerInformationState,
-} from './types';
+import { CustomerInformationFieldRefs, CustomerInformationProps } from './types';
+
+import { initializeFieldRefs } from 'components/CustomerInformation/utils';
+
 import './style.css';
 
-export class CustomerInformation extends React.Component<
-  CustomerInformationProps,
-  CustomerInformationState
-> {
-  fieldRefs: CustomerInformationFieldRefs = {} as CustomerInformationFieldRefs;
+export const CustomerInformation: FC<CustomerInformationProps> = ({
+  cart,
+  cleanCart,
+}) => {
+  const fieldsList = useMemo(() => Object.keys(CUSTOMER_INFORMATION_FIELDS_LIST), []);
 
-  constructor(props: CustomerInformationProps) {
-    super(props);
+  const initialFieldRefs = useMemo(initializeFieldRefs, []);
+  const fieldRefs = useRef<CustomerInformationFieldRefs>(initialFieldRefs);
+  const [fieldState, setFieldState] = useState<CustomerInformationFieldsList>({
+    ...CUSTOMER_INFORMATION_FIELD_INITIAL_STATE,
+  });
+  const [fieldError, setFieldError] = useState<CustomerInformationFieldsList>({
+    ...CUSTOMER_INFORMATION_FIELD_INITIAL_STATE,
+  });
+  const [hasCompletePurchaseClick, setHasCompletePurchaseClick] = useState(false);
+  const [showThankyouModal, setShowThankyouModal] = useState(false);
 
-    this.state = {
-      ...CUSTOMER_INFORMATION_FIELD_INITIAL_STATE,
-      error: { ...CUSTOMER_INFORMATION_FIELD_INITIAL_STATE },
-      hasCompletePurchaseClick: false,
-      showThankyouModal: false,
-    };
-
-    Object.keys(CUSTOMER_INFORMATION_FIELDS_LIST).forEach(key => {
-      const stateKey = key as CustomerInformationField;
-      this.fieldRefs[stateKey] = React.createRef();
-    });
-  }
-
-  validateInputField = (field: CustomerInformationField, value: string): void => {
+  const validateInputField = (field: CustomerInformationField, value: string): void => {
     const errorMessage = value ? '' : CUSTOMER_INFORMATION_FIELD_ERROR;
-    const { error } = this.state;
 
-    this.setState({
-      error: {
-        ...error,
-        [field]: errorMessage,
-      },
-    });
+    setFieldError(update(fieldError, { [field]: { $set: errorMessage } }));
   };
 
-  handleInputOnChange =
+  const handleInputOnChange =
     (field: CustomerInformationField) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { hasCompletePurchaseClick } = this.state;
       const { value } = event.currentTarget;
 
-      this.setState({
-        [field]: value,
-      } as CustomerInformationFieldsList);
+      setFieldState(update(fieldState, { [field]: { $set: value } }));
 
-      hasCompletePurchaseClick && this.validateInputField(field, value);
+      hasCompletePurchaseClick && validateInputField(field, value);
     };
 
-  renderInputFields = (): ReactNode => {
-    const { error } = this.state;
-
-    return Object.keys(CUSTOMER_INFORMATION_FIELDS_LIST).map(field => {
+  const renderInputFields = (): ReactNode =>
+    fieldsList.map(field => {
       const customerInfoField = field as CustomerInformationField;
       const label = CUSTOMER_INFORMATION_FIELDS_LIST[customerInfoField];
 
@@ -83,17 +65,15 @@ export class CustomerInformation extends React.Component<
           inputContainerStyle={{ marginBottom: '10px' }}
           inputStyle={{ width: CUSTOMER_INFORMATION_FIELD_WIDTH }}
           label={label}
-          onChange={this.handleInputOnChange(customerInfoField)}
-          error={error[customerInfoField]}
-          // eslint-disable-next-line react/destructuring-assignment
-          positive={!!this.state[customerInfoField]}
-          inputRef={this.fieldRefs[customerInfoField]}
+          onChange={handleInputOnChange(customerInfoField)}
+          error={fieldError[customerInfoField]}
+          positive={!!fieldState[customerInfoField]}
+          inputRef={fieldRefs.current[customerInfoField]}
         />
       );
     });
-  };
 
-  allFieldsAreValid = (): boolean => {
+  const allFieldsAreValid = (): boolean => {
     let hasError = false;
     const error: CustomerInformationFieldsList = {
       ...CUSTOMER_INFORMATION_FIELD_INITIAL_STATE,
@@ -101,76 +81,67 @@ export class CustomerInformation extends React.Component<
 
     let hasFocusToErrorField = false;
 
-    Object.keys(CUSTOMER_INFORMATION_FIELDS_LIST).forEach(key => {
+    fieldsList.forEach(key => {
       const stateKey = key as CustomerInformationField;
 
-      // eslint-disable-next-line react/destructuring-assignment
-      if (!this.state[stateKey]) {
+      if (!fieldState[stateKey]) {
         error[stateKey] = CUSTOMER_INFORMATION_FIELD_ERROR;
         hasError = true;
 
         if (!hasFocusToErrorField) {
           hasFocusToErrorField = true;
-          const fieldRef = this.fieldRefs[stateKey];
+          const fieldRef = fieldRefs.current[stateKey];
           fieldRef.current && fieldRef.current.focus();
         }
       }
     });
 
-    this.setState({ error });
+    setFieldError(error);
 
     return !hasError;
   };
 
-  handleButtonClick = (): void => {
-    const { cart } = this.props;
-    this.setState({ hasCompletePurchaseClick: true });
-    if (this.allFieldsAreValid()) {
+  const handleButtonClick = (): void => {
+    setHasCompletePurchaseClick(true);
+    if (allFieldsAreValid()) {
       const shopApi = new ShopAPI();
 
       shopApi
         .postOrder({
           cart,
-          user: {
-            ...omit(this.state, ['error', 'hasCompletePurchaseClick']),
-          },
+          user: fieldState,
         })
         .then(() => {
-          this.setState({ showThankyouModal: true });
+          setShowThankyouModal(true);
         });
     }
   };
 
-  handleShopMoreClick = (): void => {
-    const { cleanCart } = this.props;
-
+  const handleShopMoreClick = (): void => {
     cleanCart();
   };
 
-  render(): ReturnComponentType {
-    const { showThankyouModal } = this.state;
-    return (
-      <div className="customer-info-container">
-        <div className="heading text">Billing Information</div>
-        {this.renderInputFields()}
-        <Button
-          style={{ width: CUSTOMER_INFORMATION_FIELD_WIDTH }}
-          styleType="primary"
-          onClick={this.handleButtonClick}
-          className="complete-purchase-btn"
-        >
-          Complete Purchase
-        </Button>
-        <Modal modalBodyClassName="customer-info-modal-body" show={showThankyouModal}>
-          <div className="header">Thank you! We have received your order!</div>
-          <p>Please wait 5 to 10 business days for your items to arrived.</p>
-          <Link to={ROUTE.ALL_PRODUCTS}>
-            <Button styleType="primary" onClick={this.handleShopMoreClick}>
-              Shop More
-            </Button>
-          </Link>
-        </Modal>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="customer-info-container">
+      <div className="heading text">Billing Information</div>
+      {renderInputFields()}
+      <Button
+        style={{ width: CUSTOMER_INFORMATION_FIELD_WIDTH }}
+        styleType="primary"
+        onClick={handleButtonClick}
+        className="complete-purchase-btn"
+      >
+        Complete Purchase
+      </Button>
+      <Modal modalBodyClassName="customer-info-modal-body" show={showThankyouModal}>
+        <div className="header">Thank you! We have received your order!</div>
+        <p>Please wait 5 to 10 business days for your items to arrived.</p>
+        <Link to={ROUTE.ALL_PRODUCTS}>
+          <Button styleType="primary" onClick={handleShopMoreClick}>
+            Shop More
+          </Button>
+        </Link>
+      </Modal>
+    </div>
+  );
+};
