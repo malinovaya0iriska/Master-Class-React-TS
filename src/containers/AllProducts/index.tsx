@@ -1,109 +1,84 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable react/prefer-stateless-function */
+import { FC, ReactNode, useEffect } from 'react';
 
-import { Component, ReactNode } from 'react';
-
-import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
-
-import { AllProductsSideBar, ProductCard, Pagination } from '../../components';
+import { AllProductsSideBar, Pagination, ProductCard } from '../../components';
 import ShopAction from '../../store/actions/ShopAction';
 import UserAction from '../../store/actions/UserAction';
-import { AppStateType } from '../../store/reducers/rootReducer';
-import { Product } from '../../store/reducers/shopReducer';
+import { Product, ProductFilters } from '../../store/reducers/shopReducer';
 import { ProductPurchase } from '../../store/reducers/userReducer';
-import { ReturnComponentType } from '../../types';
 
-import {
-  AllProductsPageProps,
-  AllProductsStateProps,
-  AllProductsDispatchToProps,
-} from './types';
 import './style.css';
+import { AllProductsPageProps } from './types';
 
-class AllProducts extends Component<AllProductsPageProps> {
-  componentDidMount(): void {
-    const { shopProducts, fetchShopProductsAndFilters } = this.props;
+import { useAppDispatch, useAppSelector } from 'store';
+import { ReturnComponentType } from 'types';
 
+const AllProducts: FC<AllProductsPageProps> = (): ReturnComponentType => {
+  const { shop, user } = useAppSelector(
+    state => state,
+    (prevState, currentState) => {
+      const { shop: prevShop, user: prevUser } = prevState;
+      const { shop: nextShop, user: nextUser } = currentState;
+
+      return (
+        nextShop.shopProducts === prevShop.shopProducts &&
+        nextShop.productFilters === prevShop.productFilters &&
+        nextUser.filters === prevUser.filters &&
+        nextUser.shopProductsPage === prevUser.shopProductsPage
+      );
+    },
+  );
+
+  const dispatch = useAppDispatch();
+  const { shopProducts, productFilters } = shop;
+  const { filters: userFilters, shopProductsPage: userSelectedPage } = user;
+  const { fetchShopProductsAndFilters } = new ShopAction();
+  const { updateUserFilters, updateUserShopProductsPage, addToCart } = new UserAction();
+
+  useEffect(() => {
     if (!shopProducts.products.length) {
-      fetchShopProductsAndFilters();
+      dispatch(fetchShopProductsAndFilters());
     }
-  }
+  }, []);
 
-  renderAllProductsList = (): ReactNode => {
-    const { shopProducts, addToCart } = this.props;
-    return shopProducts.products.map((product: Product) => (
+  const handleAddToCart = (productPurchase: ProductPurchase): void => {
+    dispatch(addToCart(productPurchase));
+  };
+
+  const renderAllProductsList = (): ReactNode =>
+    shopProducts.products.map((product: Product) => (
       <div key={product.id} className="product-item-container">
-        <ProductCard product={product} addToCart={addToCart} />
+        <ProductCard product={product} addToCart={handleAddToCart} />
       </div>
     ));
-  };
 
-  handlePageChange = (selectedPage: number): void => {
-    const { userSelectedPage, updateUserShopProductsPage } = this.props;
+  const handlePageChange = (selectedPage: number): void => {
     if (selectedPage !== userSelectedPage) {
-      updateUserShopProductsPage(selectedPage);
+      dispatch(updateUserShopProductsPage(selectedPage));
     }
   };
 
-  render(): ReturnComponentType {
-    const {
-      productFilters,
-      userFilters,
-      updateUserFilters,
-      shopProducts,
-      userSelectedPage,
-    } = this.props;
-    return (
-      <div className="all-products-page-container">
-        <AllProductsSideBar
-          onUpdateUserFilters={updateUserFilters}
-          userFilters={userFilters}
-          productFilters={productFilters}
+  const handleUpdateUserFilters = (filters: ProductFilters): void => {
+    dispatch(updateUserFilters(filters));
+  };
+
+  return (
+    <div className="all-products-page-container">
+      <AllProductsSideBar
+        onUpdateUserFilters={handleUpdateUserFilters}
+        userFilters={userFilters}
+        productFilters={productFilters}
+      />
+
+      <div className="all-products-container">
+        <div className="all-products">{renderAllProductsList()}</div>
+        <Pagination
+          overrideSelectedPage={userSelectedPage}
+          onChange={handlePageChange}
+          numberOfPages={shopProducts.totalPages}
         />
-
-        <div className="all-products-container">
-          <div className="all-products">{this.renderAllProductsList()}</div>
-          <Pagination
-            overrideSelectedPage={userSelectedPage}
-            onChange={this.handlePageChange}
-            numberOfPages={shopProducts.totalPages}
-          />
-        </div>
       </div>
-    );
-  }
-}
-
-const mapStateToProps: MapStateToProps<
-  AllProductsStateProps,
-  AllProductsStateProps,
-  AppStateType
-> = state => {
-  const { shopProducts, productFilters } = state.shop;
-  const { filters, shopProductsPage } = state.user;
-  return {
-    shopProducts,
-    productFilters,
-    userFilters: filters,
-    userSelectedPage: shopProductsPage,
-  };
+    </div>
+  );
 };
 
-const mapDispatchToProps: MapDispatchToPropsFunction<
-  AllProductsDispatchToProps,
-  AllProductsStateProps
-> = dispatch => {
-  const { fetchShopProducts, fetchShopProductsAndFilters } = new ShopAction();
-  const { updateUserFilters, updateUserShopProductsPage, addToCart } = new UserAction();
-  return {
-    fetchShopProducts: options => dispatch(fetchShopProducts(options)),
-    fetchShopProductsAndFilters: () => dispatch(fetchShopProductsAndFilters()),
-    updateUserFilters: filters => dispatch(updateUserFilters(filters)),
-    updateUserShopProductsPage: (shopProductsPage: number) =>
-      dispatch(updateUserShopProductsPage(shopProductsPage)),
-    addToCart: (productPurchase: ProductPurchase) => dispatch(addToCart(productPurchase)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
+export default AllProducts;

@@ -7,4 +7,5 @@ export const rootReducer = combineReducers({
   shop: shopReducer,
   user: userReducer,
 });
+
 export type AppStateType = ReturnType<typeof rootReducer>;

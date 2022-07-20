@@ -1,7 +1,8 @@
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { rootReducer } from 'store/reducers';
+import { AppStateType, rootReducer } from 'store/reducers';
 import { rootSaga } from 'store/sagas';
 
 declare global {
@@ -20,3 +21,9 @@ export const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
+
+export type AppDispatch = typeof store.dispatch;
+
+export const useAppDispatch = (): AppDispatch => useDispatch<AppDispatch>();
+
+export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector;
