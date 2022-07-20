@@ -1,61 +1,41 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-import { Component, ReactNode } from 'react';
-
-import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
+import { FC, ReactNode, useEffect } from 'react';
 
 import { ProductCard } from '../../components';
 import { ShopAction, UserAction } from '../../store/actions';
-import { AppStateType, Product, ProductPurchase } from '../../store/reducers';
+import { Product, ProductPurchase } from '../../store/reducers';
 import './style.css';
-import { ReturnComponentType } from '../../types';
 
-import { BestSellerProps, BestSellerStateProps, BestSellerDispatchProps } from './types';
+import { useAppDispatch, useAppSelector } from 'store';
+import { ReturnComponentType } from 'types';
 
-class BestSeller extends Component<BestSellerProps> {
-  componentDidMount(): void {
-    const { bestSellerProducts, fetchAllBestSellerProducts } = this.props;
-    if (!bestSellerProducts.length) {
-      fetchAllBestSellerProducts();
-    }
-  }
+const BestSeller: FC = (): ReturnComponentType => {
+  const { bestSellerProducts } = useAppSelector(state => state.shop);
+  const dispatch = useAppDispatch();
 
-  renderBestSellerProducts = (): ReactNode => {
-    const { bestSellerProducts, addToCart } = this.props;
-
-    return bestSellerProducts.map((product: Product) => (
-      <ProductCard key={product.id} product={product} addToCart={addToCart} />
-    ));
-  };
-
-  render(): ReturnComponentType {
-    return (
-      <div className="best-seller-container">
-        <h2>Best Seller</h2>
-        <div className="best-seller-products">{this.renderBestSellerProducts()}</div>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps: MapStateToProps<
-  BestSellerStateProps,
-  {},
-  AppStateType
-> = state => ({
-  bestSellerProducts: state.shop.bestSellerProducts,
-});
-
-const mapDispatchToProps: MapDispatchToPropsFunction<
-  BestSellerDispatchProps,
-  {}
-> = dispatch => {
-  const { fetchAllBestSellerProducts } = new ShopAction();
   const { addToCart } = new UserAction();
+  const { fetchAllBestSellerProducts } = new ShopAction();
 
-  return {
-    fetchAllBestSellerProducts: () => dispatch(fetchAllBestSellerProducts()),
-    addToCart: (productPurchase: ProductPurchase) => dispatch(addToCart(productPurchase)),
+  const handleAddToCart = (productPurchase: ProductPurchase): void => {
+    dispatch(addToCart(productPurchase));
   };
+
+  const renderBestSellerProducts = (): ReactNode =>
+    bestSellerProducts.map((product: Product) => (
+      <ProductCard key={product.id} product={product} addToCart={handleAddToCart} />
+    ));
+
+  useEffect(() => {
+    if (!bestSellerProducts.length) {
+      dispatch(fetchAllBestSellerProducts());
+    }
+  }, []);
+
+  return (
+    <div className="best-seller-container">
+      <h2>Best Seller</h2>
+      <div className="best-seller-products">{renderBestSellerProducts()}</div>
+    </div>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BestSeller);
+export default BestSeller;

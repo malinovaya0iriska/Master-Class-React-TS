@@ -21,6 +21,7 @@ export interface Order {
   user: CustomerInformationFieldsList;
 }
 
+const BASE_URL = 'http://localhost:1234';
 class ShopAPI {
   getProducts = (options: GetProductsOptions) => {
     const { page, size, category } = options;
@@ -31,18 +32,18 @@ class ShopAPI {
       category ? category.join('&category=') : EMPTY_STRING
     }`;
     return axios.get(
-      `http://localhost:1234/product/all?${pageQueryParam}${sizeQueryParam}${categoryQueryParam}`,
+      `${BASE_URL}/product/all?${pageQueryParam}${sizeQueryParam}${categoryQueryParam}`,
     );
   };
 
-  getProductFilters = () => axios.get('http://localhost:1234/product/filters');
+  getProductFilters = () => axios.get(`${BASE_URL}/product/filters`);
 
   postOrder = (order: Order) => {
     const body = {
       order,
     };
 
-    return axios.post('http://localhost:1234/order', body);
+    return axios.post(`${BASE_URL}/order`, body);
   };
 }
 

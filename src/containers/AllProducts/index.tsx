@@ -7,12 +7,11 @@ import { Product, ProductFilters } from '../../store/reducers/shopReducer';
 import { ProductPurchase } from '../../store/reducers/userReducer';
 
 import './style.css';
-import { AllProductsPageProps } from './types';
 
 import { useAppDispatch, useAppSelector } from 'store';
 import { ReturnComponentType } from 'types';
 
-const AllProducts: FC<AllProductsPageProps> = (): ReturnComponentType => {
+const AllProducts: FC = (): ReturnComponentType => {
   const { shop, user } = useAppSelector(
     state => state,
     (prevState, currentState) => {
