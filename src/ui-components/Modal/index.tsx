@@ -1,67 +1,55 @@
-/* eslint-disable class-methods-use-this */
-import React from 'react';
+import { FC, MouseEvent, useEffect, useRef } from 'react';
 
 import ReactDOM from 'react-dom';
 
-import { ReturnComponentType } from '../../types';
-
 import { ModalProps } from './types';
 
+import { ReturnComponentType } from 'types';
 import './style.css';
 
-export class Modal extends React.Component<ModalProps> {
-  root: HTMLDivElement;
+export const Modal: FC<ModalProps> = ({
+  onClickOutsideModalBody,
+  show = true,
+  modalBodyClassName,
+  children,
+}): ReturnComponentType => {
+  const root = useRef(document.querySelector('#root') as HTMLDivElement);
+  const el = useRef(document.createElement('div'));
 
-  el: HTMLDivElement;
-
-  constructor(props: ModalProps) {
-    super(props);
-
-    this.root = document.querySelector('#root') as HTMLDivElement;
-    this.el = document.createElement('div');
-  }
-
-  componentDidMount(): void {
-    this.root.appendChild(this.el);
-  }
-
-  componentWillUnmount(): void {
-    this.root.removeChild(this.el);
-  }
-
-  removeOnClickPropagation = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ): void => {
+  const removeOnClickPropagation = (event: MouseEvent<HTMLDivElement>): void => {
     event.stopPropagation();
   };
 
-  onClickOutsideModalBody = (): void => {
-    const { onClickOutsideModalBody } = this.props;
-
+  const handleClickOutsideModalBody = (): void => {
     // eslint-disable-next-line no-unused-expressions
     onClickOutsideModalBody && onClickOutsideModalBody();
   };
 
-  render(): ReturnComponentType {
-    const { show = true, modalBodyClassName, children } = this.props;
-    return show
-      ? ReactDOM.createPortal(
+  useEffect(() => {
+    root.current.appendChild(el.current);
+
+    return () => {
+      root.current.removeChild(el.current);
+    };
+  }, []);
+
+  return show
+    ? ReactDOM.createPortal(
+        <div
+          onClick={removeOnClickPropagation}
+          onKeyDown={() => removeOnClickPropagation}
+          className="modal-container"
+          role="presentation"
+        >
           <div
-            onClick={this.removeOnClickPropagation}
-            onKeyDown={() => this.removeOnClickPropagation}
-            className="modal-container"
+            onClick={handleClickOutsideModalBody}
+            className="modal-overlay"
+            onKeyDown={() => handleClickOutsideModalBody}
             role="presentation"
-          >
-            <div
-              onClick={this.onClickOutsideModalBody}
-              className="modal-overlay"
-              onKeyDown={() => this.onClickOutsideModalBody}
-              role="presentation"
-            />
-            <div className={`modal-body ${modalBodyClassName || ''}`}>{children}</div>
-          </div>,
-          this.el,
-        )
-      : null;
-  }
-}
+          />
+          <div className={`modal-body ${modalBodyClassName || ''}`}>{children}</div>
+        </div>,
+        el.current,
+      )
+    : null;
+};
