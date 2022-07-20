@@ -1,9 +1,8 @@
+/* eslint-disable no-console */
 /* eslint-disable default-case */
 /* eslint-disable no-case-declarations */
 import fs from 'fs';
 import path from 'path';
-
-import React from 'react';
 
 import express from 'express';
 import register from 'ignore-styles';
@@ -24,7 +23,7 @@ import Checkout from '../src/containers/Checkout/index';
 import ErrorPage from '../src/containers/ErrorPage';
 import HomePage from '../src/containers/HomePage';
 import { ThemeContextProvider } from '../src/context/ThemeContext';
-import { rootReducer, AppStateType } from '../src/store/reducers/rootReducer';
+import { AppStateType, rootReducer } from '../src/store/reducers/rootReducer';
 import {
   Product,
   ProductFilters,

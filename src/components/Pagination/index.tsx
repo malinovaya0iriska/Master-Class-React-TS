@@ -1,68 +1,55 @@
-import React, { ReactNode } from 'react';
+import { FC, ReactNode, useContext, useState } from 'react';
 
 import { ONE } from '../../constants/index';
 import { ThemeContext } from '../../context/ThemeContext';
-import { ReturnComponentType } from '../../types';
 import { Button } from '../../ui-components';
 
-import { PaginationProps, PaginationState } from './types';
 import './style.css';
+import { PaginationProps } from './types';
 
-export class Pagination extends React.Component<PaginationProps, PaginationState> {
-  constructor(props: PaginationProps) {
-    super(props);
+import { ReturnComponentType } from 'types';
 
-    this.state = {
-      selectedPage: 1,
-    };
-  }
+export const Pagination: FC<PaginationProps> = ({
+  overrideSelectedPage,
+  onChange,
+  numberOfPages,
+}): ReturnComponentType => {
+  const [selectedPage, setSelectedPage] = useState(ONE);
+  const theme = useContext(ThemeContext);
 
-  currentSelectedPage = (): number => {
-    const { overrideSelectedPage } = this.props;
-    const { selectedPage } = this.state;
+  const getCurrentSelectedPage = (): number => overrideSelectedPage || selectedPage;
 
-    return overrideSelectedPage || selectedPage;
-  };
-
-  handlePreviousClick = (): void => {
-    const currentSelectedPage = this.currentSelectedPage();
-    const { onChange } = this.props;
+  const handlePreviousClick = (): void => {
+    const currentSelectedPage = getCurrentSelectedPage();
 
     const newPage =
       currentSelectedPage === ONE ? currentSelectedPage : currentSelectedPage - ONE;
 
-    this.setState({ selectedPage: newPage });
+    setSelectedPage(newPage);
     onChange(newPage);
   };
 
-  handleNextClick = (): void => {
-    const { numberOfPages, onChange } = this.props;
-
-    const currentSelectedPage = this.currentSelectedPage();
+  const handleNextClick = (): void => {
+    const currentSelectedPage = getCurrentSelectedPage();
 
     const newPage =
       currentSelectedPage === numberOfPages
         ? currentSelectedPage
         : currentSelectedPage + ONE;
 
-    this.setState({ selectedPage: newPage });
+    setSelectedPage(newPage);
     onChange(newPage);
   };
 
-  pageClick = (page: number) => () => {
-    const { selectedPage } = this.state;
-    const { onChange } = this.props;
-
+  const pageClick = (page: number) => () => {
     if (selectedPage !== page) {
-      this.setState({ selectedPage: page });
+      setSelectedPage(page);
       onChange(page);
     }
   };
 
-  renderPageButtons = (): ReactNode => {
-    const { numberOfPages } = this.props;
-
-    const currentSelectedPage = this.currentSelectedPage();
+  const renderPageButtons = (): ReactNode => {
+    const currentSelectedPage = getCurrentSelectedPage();
 
     return [...new Array(numberOfPages)].map((value, index) => {
       const page = index + ONE;
@@ -71,7 +58,7 @@ export class Pagination extends React.Component<PaginationProps, PaginationState
         <Button
           key={page}
           selected={currentSelectedPage === page}
-          onClick={this.pageClick(page)}
+          onClick={pageClick(page)}
           className="page-button"
         >
           {page}
@@ -80,25 +67,19 @@ export class Pagination extends React.Component<PaginationProps, PaginationState
     });
   };
 
-  render(): ReturnComponentType {
-    return (
-      <ThemeContext.Consumer>
-        {theme => (
-          <div className={`pagination-container ${theme}`}>
-            <i
-              onClick={this.handlePreviousClick}
-              className="fa fa-caret-left page-caret"
-              aria-hidden="true"
-            />
-            <div className="pages-container">{this.renderPageButtons()}</div>
-            <i
-              onClick={this.handleNextClick}
-              className="fa fa-caret-right page-caret"
-              aria-hidden="true"
-            />
-          </div>
-        )}
-      </ThemeContext.Consumer>
-    );
-  }
-}
+  return (
+    <div className={`pagination-container ${theme}`}>
+      <i
+        onClick={handlePreviousClick}
+        className="fa fa-caret-left page-caret"
+        aria-hidden="true"
+      />
+      <div className="pages-container">{renderPageButtons()}</div>
+      <i
+        onClick={handleNextClick}
+        className="fa fa-caret-right page-caret"
+        aria-hidden="true"
+      />
+    </div>
+  );
+};
