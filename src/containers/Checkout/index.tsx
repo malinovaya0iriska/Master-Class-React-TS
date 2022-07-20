@@ -1,30 +1,28 @@
-import { Component, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
-import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { CheckoutPageProduct, CustomerInformation } from '../../components';
 import { ROUTE } from '../../constants/routes';
-import { UserAction } from '../../store/actions';
-import { AppStateType } from '../../store/reducers';
-import { ReturnComponentType } from '../../types';
 import { getSubtotalPrice } from '../../utils/product';
 
-import {
-  CartDetailsType,
-  CheckoutOwnProps,
-  CheckoutPageProps,
-  CheckoutStateProps,
-  CheckoutDispatchProps,
-} from './types';
 import './style.css';
+import { CartDetailsType } from './types';
 
-class Checkout extends Component<CheckoutPageProps> {
-  getCartDetails = (): CartDetailsType => {
-    const { cart } = this.props;
+import { ZERO } from 'constants/index';
+import { useAppDispatch, useAppSelector } from 'store';
+import { UserAction } from 'store/actions';
+import { ReturnComponentType } from 'types';
 
+const Checkout: FC = (): ReturnComponentType => {
+  const dispatch = useAppDispatch();
+
+  const { cart } = useAppSelector(state => state.user);
+  const { cleanCart } = new UserAction();
+
+  const getCartDetails = (): CartDetailsType => {
     const cartItems: ReactNode[] = [];
-    let totalPrice = 0;
+    let totalPrice = ZERO;
 
     cart.forEach((product, index) => {
       if (index) {
@@ -46,57 +44,36 @@ class Checkout extends Component<CheckoutPageProps> {
       totalPrice,
     };
   };
+  const handleCleanCart = (): void => {
+    dispatch(cleanCart());
+  };
 
-  render(): ReturnComponentType {
-    const { cart, cleanCart } = this.props;
-    const { cartItems, totalPrice } = this.getCartDetails();
+  const { cartItems, totalPrice } = getCartDetails();
 
-    return cart.length ? (
-      <div className="checkout-page-container">
-        <div className="cart-items-container">
-          <div className="cart-items-header">
-            <p>Items: {cart.length}</p>
-            <div className="shipping-container">
-              <i className="fa fa-truck" aria-hidden="true" />
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label>Free Shipping</label>
-            </div>
-          </div>
-          <div className="cart-items">{cartItems}</div>
-          <div className="cart-items-footer">
-            <div className="text">Total</div>
-            <div className="total-price">${totalPrice}</div>
+  return cart.length ? (
+    <div className="checkout-page-container">
+      <div className="cart-items-container">
+        <div className="cart-items-header">
+          <p>Items: {cart.length}</p>
+          <div className="shipping-container">
+            <i className="fa fa-truck" aria-hidden="true" />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label>Free Shipping</label>
           </div>
         </div>
-        <div className="customer-info">
-          <CustomerInformation cart={cart} cleanCart={cleanCart} />
+        <div className="cart-items">{cartItems}</div>
+        <div className="cart-items-footer">
+          <div className="text">Total</div>
+          <div className="total-price">${totalPrice}</div>
         </div>
       </div>
-    ) : (
-      <Navigate to={ROUTE.HOME} />
-    );
-  }
-}
-
-const mapStateToProps: MapStateToProps<
-  CheckoutStateProps,
-  CheckoutOwnProps,
-  AppStateType
-> = state => {
-  const { cart } = state.user;
-  return {
-    cart,
-  };
+      <div className="customer-info">
+        <CustomerInformation cart={cart} cleanCart={handleCleanCart} />
+      </div>
+    </div>
+  ) : (
+    <Navigate to={ROUTE.HOME} />
+  );
 };
 
-const mapDispathToProps: MapDispatchToPropsFunction<
-  CheckoutDispatchProps,
-  CheckoutOwnProps
-> = dispatch => {
-  const { cleanCart } = new UserAction();
-  return {
-    cleanCart: () => dispatch(cleanCart()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispathToProps)(Checkout);
+export default Checkout;
