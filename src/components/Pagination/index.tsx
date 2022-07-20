@@ -17,11 +17,9 @@ export const Pagination: FC<PaginationProps> = ({
   const [selectedPage, setSelectedPage] = useState(ONE);
   const theme = useContext(ThemeContext);
 
-  const getCurrentSelectedPage = (): number => overrideSelectedPage || selectedPage;
+  const currentSelectedPage = overrideSelectedPage || selectedPage;
 
   const handlePreviousClick = (): void => {
-    const currentSelectedPage = getCurrentSelectedPage();
-
     const newPage =
       currentSelectedPage === ONE ? currentSelectedPage : currentSelectedPage - ONE;
 
@@ -30,8 +28,6 @@ export const Pagination: FC<PaginationProps> = ({
   };
 
   const handleNextClick = (): void => {
-    const currentSelectedPage = getCurrentSelectedPage();
-
     const newPage =
       currentSelectedPage === numberOfPages
         ? currentSelectedPage
@@ -48,10 +44,8 @@ export const Pagination: FC<PaginationProps> = ({
     }
   };
 
-  const renderPageButtons = (): ReactNode => {
-    const currentSelectedPage = getCurrentSelectedPage();
-
-    return [...new Array(numberOfPages)].map((value, index) => {
+  const renderPageButtons = (): ReactNode =>
+    [...new Array(numberOfPages)].map((value, index) => {
       const page = index + ONE;
 
       return (
@@ -65,7 +59,6 @@ export const Pagination: FC<PaginationProps> = ({
         </Button>
       );
     });
-  };
 
   return (
     <div className={`pagination-container ${theme}`}>

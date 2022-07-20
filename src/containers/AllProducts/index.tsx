@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from 'react';
+import { FC, ReactNode, useCallback, useEffect } from 'react';
 
 import { AllProductsSideBar, Pagination, ProductCard } from '../../components';
 import ShopAction from '../../store/actions/ShopAction';
@@ -57,9 +57,9 @@ const AllProducts: FC<AllProductsPageProps> = (): ReturnComponentType => {
     }
   };
 
-  const handleUpdateUserFilters = (filters: ProductFilters): void => {
+  const handleUpdateUserFilters = useCallback((filters: ProductFilters): void => {
     dispatch(updateUserFilters(filters));
-  };
+  }, []);
 
   return (
     <div className="all-products-page-container">

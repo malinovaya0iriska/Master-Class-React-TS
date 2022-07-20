@@ -4,7 +4,6 @@ import {
   CSSProperties,
   FC,
   ReactElement,
-  ReactNode,
   ReactPortal,
   useEffect,
   useRef,
@@ -41,8 +40,7 @@ export const Popover: FC<PopoverProps> = ({
     right: 0,
     bottom: 0,
   });
-
-  const getShowValue = (): boolean => (controlShow === undefined ? show : controlShow);
+  const currentShowValue = controlShow === undefined ? show : controlShow;
 
   const handleContentClick = (): void => {
     controlShow === undefined && setShow(!show);
@@ -78,16 +76,15 @@ export const Popover: FC<PopoverProps> = ({
       ? popperRef.current.getBoundingClientRect().width
       : ZERO;
 
-    if ((!contentWidth || popperWidth !== contentWidth) && getShowValue()) {
+    if ((!contentWidth || popperWidth !== contentWidth) && currentShowValue) {
       setContentWidth(popperWidth);
     }
   });
 
-  const renderChildElement = (): ReactNode =>
-    cloneElement(children as ReactElement, {
-      ref: childrenRef,
-      onClick: handleContentClick,
-    });
+  const ChildrenComponent = cloneElement(children as ReactElement, {
+    ref: childrenRef,
+    onClick: handleContentClick,
+  });
 
   const renderPopover = (): ReactPortal | null => {
     let style: CSSProperties;
@@ -108,7 +105,7 @@ export const Popover: FC<PopoverProps> = ({
         break;
     }
 
-    return getShowValue()
+    return currentShowValue
       ? ReactDOM.createPortal(
           <div style={style} className="popover-content-container" ref={popperRef}>
             <div className={`popover-body ${popoverBodyClassName || ''}`}>{content}</div>
@@ -120,7 +117,7 @@ export const Popover: FC<PopoverProps> = ({
 
   return (
     <>
-      {renderChildElement()}
+      {ChildrenComponent}
       {renderPopover()}
     </>
   );
